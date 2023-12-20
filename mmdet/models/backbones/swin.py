@@ -563,6 +563,7 @@ class SwinTransformer(BaseModule):
             warnings.warn('DeprecationWarning: pretrained is deprecated, '
                           'please use "init_cfg" instead')
             self.init_cfg = dict(type='Pretrained', checkpoint=pretrained)
+            print(f"INIT CFG: {self.init_cfg}")
         elif pretrained is None:
             self.init_cfg = init_cfg
         else:
@@ -668,6 +669,8 @@ class SwinTransformer(BaseModule):
 
     def init_weights(self):
         logger = get_root_logger()
+        print(f"INIT CFG IN INIT WEIGHTS: {self.init_cfg}")
+        print(f"COVERT WEIGHTS: {self.convert_weights}")
         if self.init_cfg is None:
             logger.warn(f'No pre-trained weights for '
                         f'{self.__class__.__name__}, '
