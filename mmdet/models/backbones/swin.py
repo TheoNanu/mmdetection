@@ -562,7 +562,7 @@ class SwinTransformer(BaseModule):
         if isinstance(pretrained, str):
             warnings.warn('DeprecationWarning: pretrained is deprecated, '
                           'please use "init_cfg" instead')
-            self.init_cfg = dict(type='Pretrained', checkpoint=pretrained)
+            init_cfg = dict(type='Pretrained', checkpoint=pretrained)
             print(f"INIT CFG: {self.init_cfg}")
         elif pretrained is None:
             self.init_cfg = init_cfg
