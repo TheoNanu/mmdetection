@@ -562,14 +562,14 @@ class SwinTransformer(BaseModule):
         if isinstance(pretrained, str):
             warnings.warn('DeprecationWarning: pretrained is deprecated, '
                           'please use "init_cfg" instead')
-            init_cfg = dict(type='Pretrained', checkpoint=pretrained)
+            self.init_cfg = dict(type='Pretrained', checkpoint=pretrained)
             print(f"INIT CFG: {self.init_cfg}")
         elif pretrained is None:
             self.init_cfg = init_cfg
         else:
             raise TypeError('pretrained must be a str or None')
 
-        super(SwinTransformer, self).__init__(init_cfg=init_cfg)
+        super(SwinTransformer, self).__init__(init_cfg=self.init_cfg)
 
         num_layers = len(depths)
         self.out_indices = out_indices
