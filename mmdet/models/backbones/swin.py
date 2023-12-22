@@ -695,9 +695,15 @@ class SwinTransformer(BaseModule):
                 _state_dict = ckpt['model']
             else:
                 _state_dict = ckpt
+
+            print(f"INTERNAL STATE DICT: {self.state_dict()}")
+
+            print(f"STATE DICT BEFORE CONVERSION: {_state_dict}")
             if self.convert_weights:
                 # supported loading weight from original repo,
                 _state_dict = swin_converter(_state_dict)
+
+            print(f"STATE DICT AFTER CONVERSION: {_state_dict}")
 
             state_dict = OrderedDict()
             for k, v in _state_dict.items():
