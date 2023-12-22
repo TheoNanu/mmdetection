@@ -100,38 +100,37 @@ def swin_converter(ckpt):
         return x
 
     for k, v in ckpt.items():
-        if k.startswith('head'):
-            continue
-        elif k.startswith('layers'):
-            new_v = v
-            if 'attn.' in k:
-                new_k = k.replace('attn.', 'attn.w_msa.')
-            elif 'mlp.' in k:
-                if 'mlp.fc1.' in k:
-                    new_k = k.replace('mlp.fc1.', 'ffn.layers.0.0.')
-                elif 'mlp.fc2.' in k:
-                    new_k = k.replace('mlp.fc2.', 'ffn.layers.1.')
+        if k.startswith('backbone'):
+            if k.startswith('backbone.layers'):
+                new_v = v
+                if 'attn.' in k:
+                    new_k = k.replace('attn.', 'attn.w_msa.')
+                elif 'mlp.' in k:
+                    if 'mlp.fc1.' in k:
+                        new_k = k.replace('mlp.fc1.', 'ffn.layers.0.0.')
+                    elif 'mlp.fc2.' in k:
+                        new_k = k.replace('mlp.fc2.', 'ffn.layers.1.')
+                    else:
+                        new_k = k.replace('mlp.', 'ffn.')
+                elif 'downsample' in k:
+                    new_k = k
+                    if 'reduction.' in k:
+                        new_v = correct_unfold_reduction_order(v)
+                    elif 'norm.' in k:
+                        new_v = correct_unfold_norm_order(v)
                 else:
-                    new_k = k.replace('mlp.', 'ffn.')
-            elif 'downsample' in k:
-                new_k = k
-                if 'reduction.' in k:
-                    new_v = correct_unfold_reduction_order(v)
-                elif 'norm.' in k:
-                    new_v = correct_unfold_norm_order(v)
+                    new_k = k
+                new_k = new_k.replace('layers', 'stages', 1)
+            elif k.startswith('backbone.patch_embed'):
+                new_v = v
+                if 'proj' in k:
+                    new_k = k.replace('proj', 'projection')
+                else:
+                    new_k = k
             else:
+                new_v = v
                 new_k = k
-            new_k = new_k.replace('layers', 'stages', 1)
-        elif k.startswith('patch_embed'):
-            new_v = v
-            if 'proj' in k:
-                new_k = k.replace('proj', 'projection')
-            else:
-                new_k = k
-        else:
-            new_v = v
-            new_k = k
 
-        new_ckpt['backbone.' + new_k] = new_v
+            new_ckpt[new_k] = new_v
 
     return new_ckpt
