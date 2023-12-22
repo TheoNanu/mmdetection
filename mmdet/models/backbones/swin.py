@@ -696,19 +696,34 @@ class SwinTransformer(BaseModule):
             else:
                 _state_dict = ckpt
 
-            print(f"INTERNAL STATE DICT: {self.state_dict()}")
+            print(f"INTERNAL STATE DICT:")
 
-            print(f"STATE DICT BEFORE CONVERSION: {_state_dict}")
+            for k, v in self.state_dict().items():
+                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
+
+            print(f"STATE DICT BEFORE CONVERSION:")
+
+            for k, v in _state_dict.items():
+                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
+
             if self.convert_weights:
                 # supported loading weight from original repo,
                 _state_dict = swin_converter(_state_dict)
 
-            print(f"STATE DICT AFTER CONVERSION: {_state_dict}")
+            print(f"STATE DICT AFTER CONVERSION:")
+
+            for k, v in _state_dict.items():
+                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
 
             state_dict = OrderedDict()
             for k, v in _state_dict.items():
                 if k.startswith('backbone.'):
                     state_dict[k[9:]] = v
+
+            print(f"STATE DICT AFTER GETTING ONLY BACKBONE LAYERS: {state_dict.keys()}")
+
+            for k, v in state_dict.items():
+                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
 
             # strip prefix of state_dict
             if list(state_dict.keys())[0].startswith('module.'):
