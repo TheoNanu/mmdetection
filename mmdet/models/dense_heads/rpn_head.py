@@ -1,14 +1,18 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import copy
+from collections import OrderedDict
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.cnn import ConvModule
 from mmcv.ops import batched_nms
+from mmcv.runner import _load_checkpoint
 
 from ..builder import HEADS
 from .anchor_head import AnchorHead
+from ..utils.ckpt_convert import swin_converter
+from ...utils import get_root_logger
 
 
 @HEADS.register_module()
@@ -23,12 +27,18 @@ class RPNHead(AnchorHead):
 
     def __init__(self,
                  in_channels,
+                 pretrained=None,
                  init_cfg=dict(type='Normal', layer='Conv2d', std=0.01),
                  num_convs=1,
                  **kwargs):
         self.num_convs = num_convs
         super(RPNHead, self).__init__(
             1, in_channels, init_cfg=init_cfg, **kwargs)
+
+        if isinstance(pretrained, str):
+            self.pretrained_path = pretrained
+        elif pretrained is None:
+            self.pretrained_path = None
 
     def _init_layers(self):
         """Initialize layers of the head."""
@@ -263,3 +273,27 @@ class RPNHead(AnchorHead):
                                          score_threshold, nms_pre,
                                          cfg.max_per_img)
         return dets
+
+    def init_weights(self):
+        logger = get_root_logger()
+        if self.pretrained_path is not None:
+            ckpt = _load_checkpoint(
+                self.init_cfg["checkpoint"], logger=logger, map_location='cpu')
+            if 'state_dict' in ckpt:
+                _state_dict = ckpt['state_dict']
+            elif 'model' in ckpt:
+                _state_dict = ckpt['model']
+            else:
+                _state_dict = ckpt
+
+            if self.convert_weights:
+                # supported loading weight from original repo,
+                _state_dict = swin_converter(_state_dict)
+
+            state_dict = OrderedDict()
+            for k, v in _state_dict.items():
+                if k.startswith('rpn_head.'):
+                    state_dict[k] = v
+
+            # load state_dict
+            self.load_state_dict(state_dict, False)

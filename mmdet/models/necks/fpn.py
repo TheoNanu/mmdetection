@@ -1,10 +1,14 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+from collections import OrderedDict
+
 import torch.nn as nn
 import torch.nn.functional as F
 from mmcv.cnn import ConvModule
-from mmcv.runner import BaseModule, auto_fp16
+from mmcv.runner import BaseModule, auto_fp16, _load_checkpoint
 
 from ..builder import NECKS
+from ..utils.ckpt_convert import swin_converter
+from ...utils import get_root_logger
 
 
 @NECKS.register_module()
@@ -71,6 +75,7 @@ class FPN(BaseModule):
                  conv_cfg=None,
                  norm_cfg=None,
                  act_cfg=None,
+                 pretrained=None,
                  upsample_cfg=dict(mode='nearest'),
                  init_cfg=dict(
                      type='Xavier', layer='Conv2d', distribution='uniform')):
@@ -148,6 +153,11 @@ class FPN(BaseModule):
                     inplace=False)
                 self.fpn_convs.append(extra_fpn_conv)
 
+        if isinstance(pretrained, str):
+            self.pretrained_path = pretrained
+        elif pretrained is None:
+            self.pretrained_path = None
+
     @auto_fp16()
     def forward(self, inputs):
         """Forward function."""
@@ -202,3 +212,27 @@ class FPN(BaseModule):
                     else:
                         outs.append(self.fpn_convs[i](outs[-1]))
         return tuple(outs)
+
+    def init_weights(self):
+        logger = get_root_logger()
+        if self.pretrained_path is not None:
+            ckpt = _load_checkpoint(
+                self.init_cfg["checkpoint"], logger=logger, map_location='cpu')
+            if 'state_dict' in ckpt:
+                _state_dict = ckpt['state_dict']
+            elif 'model' in ckpt:
+                _state_dict = ckpt['model']
+            else:
+                _state_dict = ckpt
+
+            if self.convert_weights:
+                # supported loading weight from original repo,
+                _state_dict = swin_converter(_state_dict)
+
+            state_dict = OrderedDict()
+            for k, v in _state_dict.items():
+                if k.startswith('neck.'):
+                    state_dict[k] = v
+
+            # load state_dict
+            self.load_state_dict(state_dict, False)
