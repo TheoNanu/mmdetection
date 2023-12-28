@@ -225,9 +225,7 @@ class FPN(BaseModule):
             else:
                 _state_dict = ckpt
 
-            if self.convert_weights:
-                # supported loading weight from original repo,
-                _state_dict = swin_converter(_state_dict)
+            _state_dict = swin_converter(_state_dict)
 
             state_dict = OrderedDict()
             for k, v in _state_dict.items():
