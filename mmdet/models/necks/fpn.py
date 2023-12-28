@@ -217,7 +217,7 @@ class FPN(BaseModule):
         logger = get_root_logger()
         if self.pretrained_path is not None:
             ckpt = _load_checkpoint(
-                self.init_cfg["checkpoint"], logger=logger, map_location='cpu')
+                self.pretrained_path, logger=logger, map_location='cpu')
             if 'state_dict' in ckpt:
                 _state_dict = ckpt['state_dict']
             elif 'model' in ckpt:
