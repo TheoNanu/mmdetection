@@ -19,6 +19,40 @@ from ..utils.ckpt_convert import swin_converter
 from ..utils.transformer import PatchEmbed, PatchMerging
 
 
+class StandardAttention(BaseModule):
+    def __init__(self, dim, heads=8, dim_head=64, init_cfg=None):
+        super().__init__()
+        inner_dim = dim_head * heads
+        self.init_cfg = init_cfg
+        self.heads = heads
+        self.scale = dim_head ** -0.5
+        self.norm = nn.LayerNorm(dim)
+
+        self.attend = nn.Softmax(dim=-1)
+
+        self.to_qkv = nn.Linear(dim, inner_dim * 3, bias=False)
+        self.to_out = nn.Linear(inner_dim, dim, bias=False)
+
+    def forward(self, x):
+        B, N, D = x.shape
+        x = self.norm(x)
+
+        qkv = self.to_qkv(x).chunk(3, dim=-1)
+        qkv = qkv.reshape(B, self.heads, N, D)
+        # q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> b h n d', h = self.heads), qkv)
+
+        q, k, v = qkv[0], qkv[1], qkv[2]
+
+        dots = torch.matmul(q, k.transpose(-1, -2)) * self.scale
+
+        attn = self.attend(dots)
+
+        out = torch.matmul(attn, v)
+        out = out.reshape(B, N, self.heads * D)
+        # out = rearrange(out, 'b h n d -> b n (h d)')
+        return self.to_out(out)
+
+
 class WindowMSA(BaseModule):
     """Window based multi-head self-attention (W-MSA) module with relative
     position bias.
@@ -766,6 +800,7 @@ class SwinTransformer(BaseModule):
             self.load_state_dict(state_dict, False)
 
     def forward(self, x):
+        print(f"INPUT TENSOR SIZe: {x.size()}")
         x, hw_shape = self.patch_embed(x)
 
         if self.use_abs_pos_embed:
