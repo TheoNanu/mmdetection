@@ -20,36 +20,35 @@ from ..utils.transformer import PatchEmbed, PatchMerging
 
 
 class StandardAttention(BaseModule):
-    def __init__(self, dim, heads=8, dim_head=64, init_cfg=None):
+    def __init__(self, dims, heads=8, init_cfg=None):
         super().__init__()
-        inner_dim = dim_head * heads
+        head_dims = dims // heads
         self.init_cfg = init_cfg
         self.heads = heads
-        self.scale = dim_head ** -0.5
-        self.norm = nn.LayerNorm(dim)
+        self.scale = head_dims ** -0.5
+        self.norm = nn.LayerNorm(dims)
 
         self.attend = nn.Softmax(dim=-1)
 
-        self.to_qkv = nn.Linear(dim, inner_dim * 3, bias=False)
-        self.to_out = nn.Linear(inner_dim, dim, bias=False)
+        self.to_qkv = nn.Linear(dims, dims * 3, bias=False)
+        self.to_out = nn.Linear(dims, dims, bias=False)
 
     def forward(self, x):
         B, N, D = x.shape
+
         x = self.norm(x)
 
-        qkv = self.to_qkv(x).chunk(3, dim=-1)
-        qkv = qkv.reshape(B, self.heads, N, D)
-        # q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> b h n d', h = self.heads), qkv)
-
+        qkv = self.to_qkv(x).reshape(B, N, 3, self.heads, D // self.heads).permute(2, 0, 3, 1, 4)
         q, k, v = qkv[0], qkv[1], qkv[2]
 
-        dots = torch.matmul(q, k.transpose(-1, -2)) * self.scale
+        q = q * self.scale
 
-        attn = self.attend(dots)
+        attn = (q @ k.transpose(-2, -1))
 
-        out = torch.matmul(attn, v)
-        out = out.reshape(B, N, self.heads * D)
-        # out = rearrange(out, 'b h n d -> b n (h d)')
+        attn = self.attend(attn)
+
+        out = (attn @ v).transpose(1, 2).reshape(B, N, D)
+        # out = out.reshape(B, N, self.heads * D)
         return self.to_out(out)
 
 
@@ -209,6 +208,8 @@ class ShiftWindowMSA(BaseModule):
             proj_drop_rate=proj_drop_rate,
             init_cfg=None)
 
+        self.msa = StandardAttention(dims=embed_dims, heads=num_heads)
+
         self.drop = build_dropout(dropout_layer)
 
     def forward(self, query, hw_shape):
@@ -263,6 +264,8 @@ class ShiftWindowMSA(BaseModule):
 
         # W-MSA/SW-MSA (nW*B, window_size*window_size, C)
         attn_windows = self.w_msa(query_windows, mask=attn_mask)
+
+        attn_windows = self.msa(attn_windows)
 
         # merge windows
         attn_windows = attn_windows.view(-1, self.window_size,
@@ -597,7 +600,6 @@ class SwinTransformer(BaseModule):
             warnings.warn('DeprecationWarning: pretrained is deprecated, '
                           'please use "init_cfg" instead')
             self.init_cfg = dict(type='Pretrained', checkpoint=pretrained)
-            print(f"INIT CFG: {self.init_cfg}")
         elif pretrained is None:
             self.init_cfg = init_cfg
         else:
@@ -703,8 +705,7 @@ class SwinTransformer(BaseModule):
 
     def init_weights(self):
         logger = get_root_logger()
-        print(f"INIT CFG IN INIT WEIGHTS: {self.init_cfg}")
-        print(f"COVERT WEIGHTS: {self.convert_weights}")
+
         if self.init_cfg is None:
             logger.warn(f'No pre-trained weights for '
                         f'{self.__class__.__name__}, '
@@ -730,34 +731,14 @@ class SwinTransformer(BaseModule):
             else:
                 _state_dict = ckpt
 
-            print(f"INTERNAL STATE DICT:")
-
-            for k, v in self.state_dict().items():
-                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
-
-            print(f"STATE DICT BEFORE CONVERSION:")
-
-            for k, v in _state_dict.items():
-                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
-
             if self.convert_weights:
                 # supported loading weight from original repo,
                 _state_dict = swin_converter(_state_dict)
-
-            print(f"STATE DICT AFTER CONVERSION:")
-
-            for k, v in _state_dict.items():
-                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
 
             state_dict = OrderedDict()
             for k, v in _state_dict.items():
                 if k.startswith('backbone.'):
                     state_dict[k[9:]] = v
-
-            print(f"STATE DICT AFTER GETTING ONLY BACKBONE LAYERS: {state_dict.keys()}")
-
-            for k, v in state_dict.items():
-                print(f"KEY: {k} LAYER SHAPE: {v.shape}")
 
             # strip prefix of state_dict
             if list(state_dict.keys())[0].startswith('module.'):
@@ -800,7 +781,6 @@ class SwinTransformer(BaseModule):
             self.load_state_dict(state_dict, False)
 
     def forward(self, x):
-        print(f"INPUT TENSOR SIZe: {x.size()}")
         x, hw_shape = self.patch_embed(x)
 
         if self.use_abs_pos_embed:

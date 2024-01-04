@@ -232,7 +232,5 @@ class FPN(BaseModule):
                 if k.startswith('neck.'):
                     state_dict[k] = v
 
-            print(state_dict["neck.fpn_convs.3.conv.weight"])
-
             # load state_dict
             self.load_state_dict(state_dict, False)
