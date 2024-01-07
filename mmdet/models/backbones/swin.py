@@ -34,6 +34,7 @@ class StandardAttention(BaseModule):
         self.to_out = nn.Linear(dims, dims, bias=False)
 
     def forward(self, x):
+        print("MY ATTENTION MODULE")
         B, N, D = x.shape
 
         x = self.norm(x)
