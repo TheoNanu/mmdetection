@@ -34,7 +34,6 @@ class StandardAttention(BaseModule):
         self.to_out = nn.Linear(dims, dims, bias=False)
 
     def forward(self, x):
-        print("MY ATTENTION MODULE")
         B, N, D = x.shape
 
         x = self.norm(x)
@@ -44,13 +43,48 @@ class StandardAttention(BaseModule):
 
         q = q * self.scale
 
-        attn = (q @ k.transpose(-2, -1))
+        k_transposed = k.transpose(-2, -1)
+
+        attn = (q @ k_transposed)
 
         attn = self.attend(attn)
 
         out = (attn @ v).transpose(1, 2).reshape(B, N, D)
         # out = out.reshape(B, N, self.heads * D)
         return self.to_out(out)
+
+
+class AttentionBlock(BaseModule):
+    def __init__(self, dims, norm_cfg, num_heads, feedforward_channels, drop_rate, drop_path_rate, act_cfg):
+        super().__init__()
+
+        self.norm1 = build_norm_layer(norm_cfg, dims)[1]
+
+        self.msa = StandardAttention(dims=dims, heads=num_heads)
+
+        self.norm2 = build_norm_layer(norm_cfg, dims)[1]
+        self.ffn = FFN(
+            embed_dims=dims,
+            feedforward_channels=feedforward_channels,
+            num_fcs=2,
+            ffn_drop=drop_rate,
+            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
+            act_cfg=act_cfg,
+            add_identity=True,
+            init_cfg=None)
+
+    def forward(self, x):
+        identity = x
+        x = self.norm1(x)
+        x = self.msa(x)
+
+        x = x + identity
+
+        identity = x
+        x = self.norm2(x)
+        x = self.ffn(x, identity=identity)
+
+        return x
 
 
 class WindowMSA(BaseModule):
@@ -209,7 +243,7 @@ class ShiftWindowMSA(BaseModule):
             proj_drop_rate=proj_drop_rate,
             init_cfg=None)
 
-        self.msa = StandardAttention(dims=embed_dims, heads=num_heads)
+        # self.msa = StandardAttention(dims=embed_dims, heads=num_heads)
 
         self.drop = build_dropout(dropout_layer)
 
@@ -266,7 +300,7 @@ class ShiftWindowMSA(BaseModule):
         # W-MSA/SW-MSA (nW*B, window_size*window_size, C)
         attn_windows = self.w_msa(query_windows, mask=attn_mask)
 
-        attn_windows = self.msa(attn_windows)
+        # attn_windows = self.msa(attn_windows)
 
         # merge windows
         attn_windows = attn_windows.view(-1, self.window_size,
@@ -393,6 +427,14 @@ class SwinBlock(BaseModule):
             add_identity=True,
             init_cfg=None)
 
+        self.standard_attention_block = None
+
+        if shift:
+            self.standard_attention_block = AttentionBlock(dims=embed_dims, norm_cfg=norm_cfg, num_heads=num_heads,
+                                                           feedforward_channels=feedforward_channels,
+                                                           drop_rate=drop_rate, drop_path_rate=drop_path_rate,
+                                                           act_cfg=act_cfg)
+
     def forward(self, x, hw_shape):
 
         def _inner_forward(x):
@@ -400,11 +442,17 @@ class SwinBlock(BaseModule):
             x = self.norm1(x)
             x = self.attn(x, hw_shape)
 
+            if self.standard_attention_block is not None:
+                standard_attn_out = self.standard_attention_block(x)
+
             x = x + identity
 
             identity = x
             x = self.norm2(x)
             x = self.ffn(x, identity=identity)
+
+            if self.standard_attention_block is not None:
+                x = x + standard_attn_out
 
             return x
 
