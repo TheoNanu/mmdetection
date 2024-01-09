@@ -387,7 +387,6 @@ class SwinBlock(BaseModule):
                  num_heads,
                  feedforward_channels,
                  window_size=7,
-                 prev_block=None,
                  shift=False,
                  qkv_bias=True,
                  qk_scale=None,
@@ -404,7 +403,8 @@ class SwinBlock(BaseModule):
         self.init_cfg = init_cfg
         self.with_cp = with_cp
 
-        self.prev_block = prev_block
+        self.shift = shift
+
         self.attn_layer_out = None
 
         self.norm1 = build_norm_layer(norm_cfg, embed_dims)[1]
@@ -431,13 +431,13 @@ class SwinBlock(BaseModule):
             add_identity=True,
             init_cfg=None)
 
-        self.standard_attention_block = None
-
-        if shift:
-            self.standard_attention_block = AttentionBlock(dims=embed_dims, norm_cfg=norm_cfg, num_heads=num_heads,
-                                                           feedforward_channels=feedforward_channels,
-                                                           drop_rate=drop_rate, drop_path_rate=drop_path_rate,
-                                                           act_cfg=act_cfg)
+        # self.standard_attention_block = None
+        #
+        # if shift:
+        #     self.standard_attention_block = AttentionBlock(dims=embed_dims, norm_cfg=norm_cfg, num_heads=num_heads,
+        #                                                    feedforward_channels=feedforward_channels,
+        #                                                    drop_rate=drop_rate, drop_path_rate=drop_path_rate,
+        #                                                    act_cfg=act_cfg)
 
     def forward(self, x, hw_shape):
 
@@ -446,9 +446,7 @@ class SwinBlock(BaseModule):
             x = self.norm1(x)
             x = self.attn(x, hw_shape)
 
-            if self.standard_attention_block is not None:
-                standard_attn_out = self.standard_attention_block(self.prev_block.attn_layer_out)
-            else:
+            if not self.shift:
                 self.attn_layer_out = x
 
             x = x + identity
@@ -456,9 +454,6 @@ class SwinBlock(BaseModule):
             identity = x
             x = self.norm2(x)
             x = self.ffn(x, identity=identity)
-
-            if self.standard_attention_block is not None:
-                x = x + standard_attn_out
 
             return x
 
@@ -531,7 +526,6 @@ class SwinBlockSequence(BaseModule):
                 feedforward_channels=feedforward_channels,
                 window_size=window_size,
                 shift=False if i % 2 == 0 else True,
-                prev_block=None if i % 2 == 0 else self.blocks[-1],
                 qkv_bias=qkv_bias,
                 qk_scale=qk_scale,
                 drop_rate=drop_rate,
@@ -543,11 +537,23 @@ class SwinBlockSequence(BaseModule):
                 init_cfg=None)
             self.blocks.append(block)
 
+            if i % 2 != 0:
+                standard_attention_block = AttentionBlock(dims=embed_dims, norm_cfg=norm_cfg, num_heads=num_heads,
+                                                          feedforward_channels=feedforward_channels,
+                                                          drop_rate=drop_rate, drop_path_rate=drop_path_rates[i],
+                                                          act_cfg=act_cfg)
+
+                self.blocks.append(standard_attention_block)
+
         self.downsample = downsample
 
     def forward(self, x, hw_shape):
-        for block in self.blocks:
-            x = block(x, hw_shape)
+        for i, block in enumerate(self.blocks):
+            if i % 3 == 2:
+                standard_attn_out = block(self.blocks[i - 2].attn_layer_out)
+                x = x + standard_attn_out
+            else:
+                x = block(x, hw_shape)
 
         if self.downsample:
             x_down, down_hw_shape = self.downsample(x, hw_shape)
