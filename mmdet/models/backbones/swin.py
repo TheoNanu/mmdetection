@@ -387,6 +387,7 @@ class SwinBlock(BaseModule):
                  num_heads,
                  feedforward_channels,
                  window_size=7,
+                 prev_block=None,
                  shift=False,
                  qkv_bias=True,
                  qk_scale=None,
@@ -402,6 +403,9 @@ class SwinBlock(BaseModule):
 
         self.init_cfg = init_cfg
         self.with_cp = with_cp
+
+        self.prev_block = prev_block
+        self.attn_layer_out = None
 
         self.norm1 = build_norm_layer(norm_cfg, embed_dims)[1]
         self.attn = ShiftWindowMSA(
@@ -443,7 +447,9 @@ class SwinBlock(BaseModule):
             x = self.attn(x, hw_shape)
 
             if self.standard_attention_block is not None:
-                standard_attn_out = self.standard_attention_block(x)
+                standard_attn_out = self.standard_attention_block(self.prev_block.attn_layer_out)
+            else:
+                self.attn_layer_out = x
 
             x = x + identity
 
@@ -525,6 +531,7 @@ class SwinBlockSequence(BaseModule):
                 feedforward_channels=feedforward_channels,
                 window_size=window_size,
                 shift=False if i % 2 == 0 else True,
+                prev_block=None if i % 2 == 0 else self.blocks[-1],
                 qkv_bias=qkv_bias,
                 qk_scale=qk_scale,
                 drop_rate=drop_rate,
