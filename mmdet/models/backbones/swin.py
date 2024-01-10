@@ -519,6 +519,7 @@ class SwinBlockSequence(BaseModule):
             drop_path_rates = [deepcopy(drop_path_rate) for _ in range(depth)]
 
         self.blocks = ModuleList()
+        self.norm_layers = ModuleList()
         for i in range(depth):
             block = SwinBlock(
                 embed_dims=embed_dims,
@@ -545,13 +546,21 @@ class SwinBlockSequence(BaseModule):
 
                 self.blocks.append(standard_attention_block)
 
+                norm = build_norm_layer(norm_cfg, embed_dims)[1]
+
+                self.norm_layers.append(norm)
+
         self.downsample = downsample
 
     def forward(self, x, hw_shape):
+        j = 0
         for i, block in enumerate(self.blocks):
             if i % 3 == 2:
                 standard_attn_out = block(self.blocks[i - 2].attn_layer_out)
                 x = x + standard_attn_out
+
+                x = self.norm_layers[j](x)
+                j += 1
             else:
                 x = block(x, hw_shape)
 
