@@ -519,7 +519,7 @@ class SwinBlockSequence(BaseModule):
             drop_path_rates = [deepcopy(drop_path_rate) for _ in range(depth)]
 
         self.blocks = ModuleList()
-        self.norm_layers = ModuleList()
+        # self.norm_layers = ModuleList()
         for i in range(depth):
             block = SwinBlock(
                 embed_dims=embed_dims,
@@ -538,31 +538,31 @@ class SwinBlockSequence(BaseModule):
                 init_cfg=None)
             self.blocks.append(block)
 
-            if i % 2 != 0:
-                standard_attention_block = AttentionBlock(dims=embed_dims, norm_cfg=norm_cfg, num_heads=num_heads,
-                                                          feedforward_channels=feedforward_channels,
-                                                          drop_rate=drop_rate, drop_path_rate=drop_path_rates[i],
-                                                          act_cfg=act_cfg)
-
-                self.blocks.append(standard_attention_block)
-
-                norm = build_norm_layer(norm_cfg, embed_dims)[1]
-
-                self.norm_layers.append(norm)
+            # if i % 2 != 0:
+            #     standard_attention_block = AttentionBlock(dims=embed_dims, norm_cfg=norm_cfg, num_heads=num_heads,
+            #                                               feedforward_channels=feedforward_channels,
+            #                                               drop_rate=drop_rate, drop_path_rate=drop_path_rates[i],
+            #                                               act_cfg=act_cfg)
+            #
+            #     self.blocks.append(standard_attention_block)
+            #
+            #     norm = build_norm_layer(norm_cfg, embed_dims)[1]
+            #
+            #     self.norm_layers.append(norm)
 
         self.downsample = downsample
 
     def forward(self, x, hw_shape):
-        j = 0
+        # j = 0
         for i, block in enumerate(self.blocks):
-            if i % 3 == 2:
-                standard_attn_out = block(self.blocks[i - 2].attn_layer_out)
-                x = x + standard_attn_out
-
-                x = self.norm_layers[j](x)
-                j += 1
-            else:
-                x = block(x, hw_shape)
+            # if i % 3 == 2:
+            #     standard_attn_out = block(self.blocks[i - 2].attn_layer_out)
+            #     x = x + standard_attn_out
+            #
+            #     x = self.norm_layers[j](x)
+            #     j += 1
+            # else:
+            x = block(x, hw_shape)
 
         if self.downsample:
             x_down, down_hw_shape = self.downsample(x, hw_shape)
@@ -588,7 +588,7 @@ class SwinTransformer(BaseModule):
             Defaults: 3.
         embed_dims (int): The feature dimension. Default: 96.
         patch_size (int | tuple[int]): Patch size. Default: 4.
-        window_size (int): Window size. Default: 7.
+        window_size (int | tuple[int]): Window size. Default: 7.
         mlp_ratio (int | float): Ratio of mlp hidden dim to embedding dim.
             Default: 4.
         depths (tuple[int]): Depths of each Swin Transformer stage.
@@ -634,7 +634,7 @@ class SwinTransformer(BaseModule):
                  in_channels=3,
                  embed_dims=96,
                  patch_size=4,
-                 window_size=7,
+                 window_size=(14, 7, 7, 7),
                  mlp_ratio=4,
                  depths=(2, 2, 6, 2),
                  num_heads=(3, 6, 12, 24),
@@ -725,7 +725,7 @@ class SwinTransformer(BaseModule):
                 num_heads=num_heads[i],
                 feedforward_channels=int(mlp_ratio * in_channels),
                 depth=depths[i],
-                window_size=window_size,
+                window_size=window_size[i],
                 qkv_bias=qkv_bias,
                 qk_scale=qk_scale,
                 drop_rate=drop_rate,
