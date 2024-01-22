@@ -481,7 +481,7 @@ class SwinTransformer(BaseModule):
             Defaults: 3.
         embed_dims (int): The feature dimension. Default: 96.
         patch_size (int | tuple[int]): Patch size. Default: 4.
-        window_size (int): Window size. Default: 7.
+        window_size (int | tuple[int]): Window size. Default: 7.
         mlp_ratio (int): Ratio of mlp hidden dim to embedding dim.
             Default: 4.
         depths (tuple[int]): Depths of each Swin Transformer stage.
@@ -527,7 +527,7 @@ class SwinTransformer(BaseModule):
                  in_channels=3,
                  embed_dims=96,
                  patch_size=4,
-                 window_size=7,
+                 window_size=(14, 7, 7, 7),
                  mlp_ratio=4,
                  depths=(2, 2, 6, 2),
                  num_heads=(3, 6, 12, 24),
@@ -619,7 +619,7 @@ class SwinTransformer(BaseModule):
                 num_heads=num_heads[i],
                 feedforward_channels=mlp_ratio * in_channels,
                 depth=depths[i],
-                window_size=window_size,
+                window_size=window_size[i],
                 qkv_bias=qkv_bias,
                 qk_scale=qk_scale,
                 drop_rate=drop_rate,
