@@ -527,7 +527,7 @@ class SwinTransformer(BaseModule):
                  in_channels=3,
                  embed_dims=96,
                  patch_size=4,
-                 window_size=(14, 7, 7, 7),
+                 window_size=(7, 7, 7, 7),
                  mlp_ratio=4,
                  depths=(2, 2, 6, 2),
                  num_heads=(3, 6, 12, 24),
@@ -640,6 +640,8 @@ class SwinTransformer(BaseModule):
             layer = build_norm_layer(norm_cfg, self.num_features[i])[1]
             layer_name = f'norm{i}'
             self.add_module(layer_name, layer)
+
+        print(f"WINDOW SIZE: {window_size}")
 
     def train(self, mode=True):
         """Convert the model into training mode while keep layers freezed."""
