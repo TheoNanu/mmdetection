@@ -90,7 +90,7 @@ model = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
-    dict(type='RandomFlip', flip_ratio=0.5),
+    dict(type='RandomFlip', prob=0.5),
     dict(type='AutoAugment',
          policies=[
              [
