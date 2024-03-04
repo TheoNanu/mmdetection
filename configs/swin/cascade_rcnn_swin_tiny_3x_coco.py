@@ -24,7 +24,9 @@ model = dict(
         convert_weights=False,
         schemes=("left", "right", "bottom-right", "up"),
         frozen_stages=4,
-        init_cfg=None),
+        init_cfg=dict(
+            type='Pretrained',
+            checkpoint='/content/drive/MyDrive/swin_pretrained/original/epoch_36.pth')),
     neck=dict(in_channels=[96, 192, 384, 768]),
     roi_head=dict(
         bbox_head=[
@@ -90,7 +92,7 @@ model = dict(
 # augmentation strategy originates from DETR / Sparse RCNN
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+    dict(type='LoadAnnotations', with_bbox=True),
     dict(type='RandomFlip', prob=0.5),
     dict(type='AutoAugment',
          policies=[
@@ -131,21 +133,50 @@ test_pipeline = [
                    'scale_factor'))
 ]
 
-dataset_type = 'COCODataset'
-classes = ('Clip', 'Head_Black', 'Head_Blue', 'Head_None', 'Head_Red')
-data = dict(
-    train=dict(
-        img_prefix='balloon/train/',
-        classes=classes,
-        ann_file='balloon/train/annotation_coco.json'),
-    val=dict(
-        img_prefix='balloon/val/',
-        classes=classes,
-        ann_file='balloon/val/annotation_coco.json'),
-    test=dict(
-        img_prefix='balloon/val/',
-        classes=classes,
-        ann_file='balloon/val/annotation_coco.json'))
+dataset_type = 'CocoDataset'
+metainfo = dict(classes=('Clip', 'Head_Black', 'Head_Blue', 'Head_None', 'Head_Red',))
+
+data_root = '/content/mmdetection/clips_detection_upper_light-14/'
+
+train_dataloader = dict(
+    batch_size=8,
+    num_workers=8,
+    persistent_workers=True,
+    sampler=dict(type='DefaultSampler', shuffle=True),
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='train/_annotations.coco.json',
+        data_prefix=dict(img='train/'),
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        pipeline=train_pipeline,
+        metainfo=metainfo,
+        backend_args=None))
+val_dataloader = dict(
+    batch_size=1,
+    num_workers=2,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='valid/_annotations.coco.json',
+        data_prefix=dict(img='valid/'),
+        test_mode=True,
+        pipeline=test_pipeline,
+        metainfo=metainfo,
+        backend_args=None))
+test_dataloader = val_dataloader
+
+val_evaluator = dict(
+    type='CocoMetric',
+    ann_file=data_root + 'valid/_annotations.coco.json',
+    metric='bbox',
+    format_only=False,
+    backend_args=None)
+test_evaluator = val_evaluator
 
 max_epochs = 36
 train_cfg = dict(max_epochs=max_epochs)
