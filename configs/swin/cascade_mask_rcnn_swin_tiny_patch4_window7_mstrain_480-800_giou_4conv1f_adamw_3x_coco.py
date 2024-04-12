@@ -8,7 +8,7 @@ model = dict(
     type="CascadeRCNN",
     backbone=dict(
         _delete_=True,
-        type='SwinTransformerMultipleSchemes',
+        type='SwinTransformerShiftsOnThird',
         embed_dims=96,
         depths=[2, 2, 6, 2],
         num_heads=[3, 6, 12, 24],
@@ -23,7 +23,7 @@ model = dict(
         out_indices=(0, 1, 2, 3),
         with_cp=False,
         convert_weights=False,
-        schemes=("left", "right", "bottom-right", "up"),
+        schemes=("bottom-right", "left", "up"),
         init_cfg=None),
     neck=dict(in_channels=[96, 192, 384, 768]),
     roi_head=dict(
