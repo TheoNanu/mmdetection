@@ -355,6 +355,7 @@ class ShiftWindowMSAMultipleSchemes(BaseModule):
         # cyclic shift
         if self.shift_size > 0:
             if self.shifting_scheme == "down":
+                print("Generating shifts down")
                 shifts = -self.shift_size
                 dims_shift = 1
 
@@ -363,6 +364,7 @@ class ShiftWindowMSAMultipleSchemes(BaseModule):
                                   -self.shift_size), slice(-self.shift_size, None))
                 w_slices = (slice(0, None))
             elif self.shifting_scheme == "up":
+                print("Generating shifts up")
                 shifts = self.shift_size
                 dims_shift = 1
 
@@ -371,6 +373,7 @@ class ShiftWindowMSAMultipleSchemes(BaseModule):
                                   self.window_size), slice(self.window_size, None))
                 w_slices = (slice(0, None))
             elif self.shifting_scheme == "left":
+                print("Generating shifts left")
                 shifts = self.shift_size
                 dims_shift = 2
 
@@ -379,6 +382,7 @@ class ShiftWindowMSAMultipleSchemes(BaseModule):
                             slice(self.shift_size,
                                   self.window_size), slice(self.window_size, None))
             elif self.shifting_scheme == "right":
+                print("Generating shifts right")
                 shifts = -self.shift_size
                 dims_shift = 2
 
@@ -387,6 +391,7 @@ class ShiftWindowMSAMultipleSchemes(BaseModule):
                             slice(-self.window_size,
                                   -self.shift_size), slice(-self.shift_size, None))
             else:
+                print("Generating shifts original")
                 shifts = (-self.shift_size, -self.shift_size)
                 dims_shift = (1, 2)
 
