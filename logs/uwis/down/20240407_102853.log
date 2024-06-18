@@ -1,0 +1,2299 @@
+2024/04/07 10:28:54 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 2102831232
+    GPU 0: NVIDIA A100-SXM4-40GB
+    CUDA_HOME: /usr/local/cuda
+    NVCC: Cuda compilation tools, release 12.2, V12.2.140
+    GCC: x86_64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+    PyTorch: 1.11.0+cu113
+    PyTorch compiling details: PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191122 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.5.2 (Git Hash a9302535553c73243c632ad3c4c80beec3d19a1e)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.3
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86
+  - CuDNN 8.2
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.3, CUDNN_VERSION=8.2.0, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -DEDGE_PROFILER_USE_KINETO -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.11.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=OFF, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.12.0+cu113
+    OpenCV: 4.8.0
+    MMEngine: 0.10.3
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 2102831232
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2024/04/07 10:28:55 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=16, enable=False)
+data_root = '/content/mmdetection/UW-IS-1/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    checkpoint=dict(interval=1, type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+launcher = 'none'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+max_epochs = 36
+metainfo = dict(
+    classes=(
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+    ))
+model = dict(
+    backbone=dict(
+        attn_drop_rate=0.0,
+        convert_weights=False,
+        depths=[
+            2,
+            2,
+            6,
+            2,
+        ],
+        drop_path_rate=0.2,
+        drop_rate=0.0,
+        embed_dims=96,
+        frozen_stages=4,
+        init_cfg=dict(
+            checkpoint=
+            '/content/drive/MyDrive/swin_pretrained/down/epoch_36.pth',
+            type='Pretrained'),
+        mlp_ratio=4,
+        num_heads=[
+            3,
+            6,
+            12,
+            24,
+        ],
+        out_indices=(
+            0,
+            1,
+            2,
+            3,
+        ),
+        patch_norm=True,
+        qk_scale=None,
+        qkv_bias=True,
+        schemes=(
+            'down',
+            'down',
+            'down',
+            'down',
+        ),
+        type='SwinTransformerMultipleSchemes',
+        window_size=(
+            7,
+            7,
+            7,
+            7,
+        ),
+        with_cp=False),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_size_divisor=32,
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        in_channels=[
+            96,
+            192,
+            384,
+            768,
+        ],
+        num_outs=5,
+        out_channels=256,
+        type='FPN'),
+    roi_head=dict(
+        bbox_head=[
+            dict(
+                bbox_coder=dict(
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.1,
+                        0.1,
+                        0.2,
+                        0.2,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                conv_out_channels=256,
+                fc_out_channels=1024,
+                in_channels=256,
+                loss_bbox=dict(loss_weight=10.0, type='GIoULoss'),
+                loss_cls=dict(
+                    loss_weight=1.0,
+                    type='CrossEntropyLoss',
+                    use_sigmoid=False),
+                norm_cfg=dict(requires_grad=True, type='SyncBN'),
+                num_classes=14,
+                num_shared_convs=4,
+                num_shared_fcs=1,
+                reg_class_agnostic=False,
+                reg_decoded_bbox=True,
+                roi_feat_size=7,
+                type='ConvFCBBoxHead'),
+            dict(
+                bbox_coder=dict(
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.05,
+                        0.05,
+                        0.1,
+                        0.1,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                conv_out_channels=256,
+                fc_out_channels=1024,
+                in_channels=256,
+                loss_bbox=dict(loss_weight=10.0, type='GIoULoss'),
+                loss_cls=dict(
+                    loss_weight=1.0,
+                    type='CrossEntropyLoss',
+                    use_sigmoid=False),
+                norm_cfg=dict(requires_grad=True, type='SyncBN'),
+                num_classes=14,
+                num_shared_convs=4,
+                num_shared_fcs=1,
+                reg_class_agnostic=False,
+                reg_decoded_bbox=True,
+                roi_feat_size=7,
+                type='ConvFCBBoxHead'),
+            dict(
+                bbox_coder=dict(
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.033,
+                        0.033,
+                        0.067,
+                        0.067,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                conv_out_channels=256,
+                fc_out_channels=1024,
+                in_channels=256,
+                loss_bbox=dict(loss_weight=10.0, type='GIoULoss'),
+                loss_cls=dict(
+                    loss_weight=1.0,
+                    type='CrossEntropyLoss',
+                    use_sigmoid=False),
+                norm_cfg=dict(requires_grad=True, type='SyncBN'),
+                num_classes=14,
+                num_shared_convs=4,
+                num_shared_fcs=1,
+                reg_class_agnostic=False,
+                reg_decoded_bbox=True,
+                roi_feat_size=7,
+                type='ConvFCBBoxHead'),
+        ],
+        bbox_roi_extractor=dict(
+            featmap_strides=[
+                4,
+                8,
+                16,
+                32,
+            ],
+            out_channels=256,
+            roi_layer=dict(output_size=7, sampling_ratio=0, type='RoIAlign'),
+            type='SingleRoIExtractor'),
+        num_stages=3,
+        stage_loss_weights=[
+            1,
+            0.5,
+            0.25,
+        ],
+        type='CascadeRoIHead'),
+    rpn_head=dict(
+        anchor_generator=dict(
+            ratios=[
+                0.5,
+                1.0,
+                2.0,
+            ],
+            scales=[
+                8,
+            ],
+            strides=[
+                4,
+                8,
+                16,
+                32,
+                64,
+            ],
+            type='AnchorGenerator'),
+        bbox_coder=dict(
+            target_means=[
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+            ],
+            target_stds=[
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+            ],
+            type='DeltaXYWHBBoxCoder'),
+        feat_channels=256,
+        in_channels=256,
+        loss_bbox=dict(
+            beta=0.1111111111111111, loss_weight=1.0, type='SmoothL1Loss'),
+        loss_cls=dict(
+            loss_weight=1.0, type='CrossEntropyLoss', use_sigmoid=True),
+        type='RPNHead'),
+    test_cfg=dict(
+        rcnn=dict(
+            max_per_img=100,
+            nms=dict(iou_threshold=0.5, type='nms'),
+            score_thr=0.05),
+        rpn=dict(
+            max_per_img=1000,
+            min_bbox_size=0,
+            nms=dict(iou_threshold=0.7, type='nms'),
+            nms_pre=1000)),
+    train_cfg=dict(
+        rcnn=[
+            dict(
+                assigner=dict(
+                    ignore_iof_thr=-1,
+                    match_low_quality=False,
+                    min_pos_iou=0.5,
+                    neg_iou_thr=0.5,
+                    pos_iou_thr=0.5,
+                    type='MaxIoUAssigner'),
+                debug=False,
+                pos_weight=-1,
+                sampler=dict(
+                    add_gt_as_proposals=True,
+                    neg_pos_ub=-1,
+                    num=512,
+                    pos_fraction=0.25,
+                    type='RandomSampler')),
+            dict(
+                assigner=dict(
+                    ignore_iof_thr=-1,
+                    match_low_quality=False,
+                    min_pos_iou=0.6,
+                    neg_iou_thr=0.6,
+                    pos_iou_thr=0.6,
+                    type='MaxIoUAssigner'),
+                debug=False,
+                pos_weight=-1,
+                sampler=dict(
+                    add_gt_as_proposals=True,
+                    neg_pos_ub=-1,
+                    num=512,
+                    pos_fraction=0.25,
+                    type='RandomSampler')),
+            dict(
+                assigner=dict(
+                    ignore_iof_thr=-1,
+                    match_low_quality=False,
+                    min_pos_iou=0.7,
+                    neg_iou_thr=0.7,
+                    pos_iou_thr=0.7,
+                    type='MaxIoUAssigner'),
+                debug=False,
+                pos_weight=-1,
+                sampler=dict(
+                    add_gt_as_proposals=True,
+                    neg_pos_ub=-1,
+                    num=512,
+                    pos_fraction=0.25,
+                    type='RandomSampler')),
+        ],
+        rpn=dict(
+            allowed_border=0,
+            assigner=dict(
+                ignore_iof_thr=-1,
+                match_low_quality=True,
+                min_pos_iou=0.3,
+                neg_iou_thr=0.3,
+                pos_iou_thr=0.7,
+                type='MaxIoUAssigner'),
+            debug=False,
+            pos_weight=-1,
+            sampler=dict(
+                add_gt_as_proposals=False,
+                neg_pos_ub=-1,
+                num=256,
+                pos_fraction=0.5,
+                type='RandomSampler')),
+        rpn_proposal=dict(
+            max_per_img=2000,
+            min_bbox_size=0,
+            nms=dict(iou_threshold=0.7, type='nms'),
+            nms_pre=2000)),
+    type='CascadeRCNN')
+optim_wrapper = dict(
+    optimizer=dict(
+        betas=(
+            0.9,
+            0.999,
+        ), lr=0.0001, type='AdamW', weight_decay=0.05),
+    paramwise_cfg=dict(
+        custom_keys=dict(
+            absolute_pos_embed=dict(decay_mult=0.0),
+            norm=dict(decay_mult=0.0),
+            relative_position_bias_table=dict(decay_mult=0.0))),
+    type='OptimWrapper')
+param_scheduler = [
+    dict(
+        begin=0, by_epoch=False, end=500, start_factor=0.001, type='LinearLR'),
+    dict(
+        begin=0,
+        by_epoch=True,
+        end=36,
+        gamma=0.1,
+        milestones=[
+            27,
+            33,
+        ],
+        type='MultiStepLR'),
+]
+randomness = dict(seed=2102831232)
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='valid/_annotations.coco.json',
+        backend_args=None,
+        data_prefix=dict(img='valid/'),
+        data_root='/content/mmdetection/UW-IS-1/',
+        metainfo=dict(
+            classes=(
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+            )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1333,
+                800,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file='/content/mmdetection/UW-IS-1/valid/_annotations.coco.json',
+    backend_args=None,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+test_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1333,
+        800,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(max_epochs=36, type='EpochBasedTrainLoop', val_interval=1)
+train_dataloader = dict(
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    batch_size=8,
+    dataset=dict(
+        ann_file='train/_annotations.coco.json',
+        backend_args=None,
+        data_prefix=dict(img='train/'),
+        data_root='/content/mmdetection/UW-IS-1/',
+        filter_cfg=dict(filter_empty_gt=True, min_size=32),
+        metainfo=dict(
+            classes=(
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+            )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(
+                policies=[
+                    [
+                        dict(
+                            keep_ratio=True,
+                            scales=[
+                                (
+                                    480,
+                                    1333,
+                                ),
+                                (
+                                    512,
+                                    1333,
+                                ),
+                                (
+                                    544,
+                                    1333,
+                                ),
+                                (
+                                    576,
+                                    1333,
+                                ),
+                                (
+                                    608,
+                                    1333,
+                                ),
+                                (
+                                    640,
+                                    1333,
+                                ),
+                                (
+                                    672,
+                                    1333,
+                                ),
+                                (
+                                    704,
+                                    1333,
+                                ),
+                                (
+                                    736,
+                                    1333,
+                                ),
+                                (
+                                    768,
+                                    1333,
+                                ),
+                                (
+                                    800,
+                                    1333,
+                                ),
+                            ],
+                            type='RandomChoiceResize'),
+                    ],
+                    [
+                        dict(
+                            keep_ratio=True,
+                            scales=[
+                                (
+                                    400,
+                                    1333,
+                                ),
+                                (
+                                    500,
+                                    1333,
+                                ),
+                                (
+                                    600,
+                                    1333,
+                                ),
+                            ],
+                            type='RandomChoiceResize'),
+                        dict(
+                            allow_negative_crop=True,
+                            crop_size=(
+                                384,
+                                600,
+                            ),
+                            crop_type='absolute_range',
+                            type='RandomCrop'),
+                        dict(
+                            keep_ratio=True,
+                            scales=[
+                                (
+                                    480,
+                                    1333,
+                                ),
+                                (
+                                    512,
+                                    1333,
+                                ),
+                                (
+                                    544,
+                                    1333,
+                                ),
+                                (
+                                    576,
+                                    1333,
+                                ),
+                                (
+                                    608,
+                                    1333,
+                                ),
+                                (
+                                    640,
+                                    1333,
+                                ),
+                                (
+                                    672,
+                                    1333,
+                                ),
+                                (
+                                    704,
+                                    1333,
+                                ),
+                                (
+                                    736,
+                                    1333,
+                                ),
+                                (
+                                    768,
+                                    1333,
+                                ),
+                                (
+                                    800,
+                                    1333,
+                                ),
+                            ],
+                            type='RandomChoiceResize'),
+                    ],
+                ],
+                type='AutoAugment'),
+            dict(type='PackDetInputs'),
+        ],
+        type='CocoDataset'),
+    num_workers=8,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(
+        policies=[
+            [
+                dict(
+                    keep_ratio=True,
+                    scales=[
+                        (
+                            480,
+                            1333,
+                        ),
+                        (
+                            512,
+                            1333,
+                        ),
+                        (
+                            544,
+                            1333,
+                        ),
+                        (
+                            576,
+                            1333,
+                        ),
+                        (
+                            608,
+                            1333,
+                        ),
+                        (
+                            640,
+                            1333,
+                        ),
+                        (
+                            672,
+                            1333,
+                        ),
+                        (
+                            704,
+                            1333,
+                        ),
+                        (
+                            736,
+                            1333,
+                        ),
+                        (
+                            768,
+                            1333,
+                        ),
+                        (
+                            800,
+                            1333,
+                        ),
+                    ],
+                    type='RandomChoiceResize'),
+            ],
+            [
+                dict(
+                    keep_ratio=True,
+                    scales=[
+                        (
+                            400,
+                            1333,
+                        ),
+                        (
+                            500,
+                            1333,
+                        ),
+                        (
+                            600,
+                            1333,
+                        ),
+                    ],
+                    type='RandomChoiceResize'),
+                dict(
+                    allow_negative_crop=True,
+                    crop_size=(
+                        384,
+                        600,
+                    ),
+                    crop_type='absolute_range',
+                    type='RandomCrop'),
+                dict(
+                    keep_ratio=True,
+                    scales=[
+                        (
+                            480,
+                            1333,
+                        ),
+                        (
+                            512,
+                            1333,
+                        ),
+                        (
+                            544,
+                            1333,
+                        ),
+                        (
+                            576,
+                            1333,
+                        ),
+                        (
+                            608,
+                            1333,
+                        ),
+                        (
+                            640,
+                            1333,
+                        ),
+                        (
+                            672,
+                            1333,
+                        ),
+                        (
+                            704,
+                            1333,
+                        ),
+                        (
+                            736,
+                            1333,
+                        ),
+                        (
+                            768,
+                            1333,
+                        ),
+                        (
+                            800,
+                            1333,
+                        ),
+                    ],
+                    type='RandomChoiceResize'),
+            ],
+        ],
+        type='AutoAugment'),
+    dict(type='PackDetInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='valid/_annotations.coco.json',
+        backend_args=None,
+        data_prefix=dict(img='valid/'),
+        data_root='/content/mmdetection/UW-IS-1/',
+        metainfo=dict(
+            classes=(
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+            )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1333,
+                800,
+            ), type='Resize'),
+            dict(type='LoadAnnotations', with_bbox=True),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file='/content/mmdetection/UW-IS-1/valid/_annotations.coco.json',
+    backend_args=None,
+    format_only=False,
+    metric='bbox',
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = '/content/drive/MyDrive/swin_uwis/down'
+
+2024/04/07 10:29:03 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2024/04/07 10:29:03 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:decay_mult=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:lr=0.0001
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:weight_decay=0.0
+2024/04/07 10:29:05 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:decay_mult=0.0
+2024/04/07 10:29:06 - mmengine - INFO - Loads checkpoint by local backend from path: /content/drive/MyDrive/swin_pretrained/down/epoch_36.pth
+Name of parameter - Initialization information
+
+backbone.patch_embed.projection.weight - torch.Size([96, 3, 4, 4]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.patch_embed.projection.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.patch_embed.norm.weight - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.patch_embed.norm.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.norm1.weight - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.norm1.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 3]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.attn.w_msa.qkv.weight - torch.Size([288, 96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.attn.w_msa.qkv.bias - torch.Size([288]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.attn.w_msa.proj.weight - torch.Size([96, 96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.attn.w_msa.proj.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.norm2.weight - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.norm2.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.ffn.layers.0.0.weight - torch.Size([384, 96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.ffn.layers.0.0.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.ffn.layers.1.weight - torch.Size([96, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.0.ffn.layers.1.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.norm1.weight - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.norm1.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 3]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.attn.w_msa.qkv.weight - torch.Size([288, 96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.attn.w_msa.qkv.bias - torch.Size([288]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.attn.w_msa.proj.weight - torch.Size([96, 96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.attn.w_msa.proj.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.norm2.weight - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.norm2.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.ffn.layers.0.0.weight - torch.Size([384, 96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.ffn.layers.0.0.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.ffn.layers.1.weight - torch.Size([96, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.blocks.1.ffn.layers.1.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.downsample.norm.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.downsample.norm.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.0.downsample.reduction.weight - torch.Size([192, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.norm1.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.norm1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 6]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.attn.w_msa.qkv.weight - torch.Size([576, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.attn.w_msa.qkv.bias - torch.Size([576]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.attn.w_msa.proj.weight - torch.Size([192, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.attn.w_msa.proj.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.norm2.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.norm2.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.ffn.layers.0.0.weight - torch.Size([768, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.ffn.layers.0.0.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.ffn.layers.1.weight - torch.Size([192, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.0.ffn.layers.1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.norm1.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.norm1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 6]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.attn.w_msa.qkv.weight - torch.Size([576, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.attn.w_msa.qkv.bias - torch.Size([576]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.attn.w_msa.proj.weight - torch.Size([192, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.attn.w_msa.proj.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.norm2.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.norm2.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.ffn.layers.0.0.weight - torch.Size([768, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.ffn.layers.0.0.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.ffn.layers.1.weight - torch.Size([192, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.blocks.1.ffn.layers.1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.downsample.norm.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.downsample.norm.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.1.downsample.reduction.weight - torch.Size([384, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.0.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.1.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.2.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.3.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.4.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.blocks.5.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.downsample.norm.weight - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.downsample.norm.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.2.downsample.reduction.weight - torch.Size([768, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.0.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.stages.3.blocks.1.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm0.weight - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm0.bias - torch.Size([96]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm1.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm3.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+backbone.norm3.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformerMultipleSchemes  
+
+neck.lateral_convs.0.conv.weight - torch.Size([256, 96, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+neck.lateral_convs.1.conv.weight - torch.Size([256, 192, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+neck.lateral_convs.2.conv.weight - torch.Size([256, 384, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+neck.lateral_convs.3.conv.weight - torch.Size([256, 768, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+neck.fpn_convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+neck.fpn_convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+neck.fpn_convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+neck.fpn_convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+rpn_head.rpn_conv.weight - torch.Size([256, 256, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_conv.bias - torch.Size([256]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_cls.weight - torch.Size([3, 256, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_cls.bias - torch.Size([3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_reg.weight - torch.Size([12, 256, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+rpn_head.rpn_reg.bias - torch.Size([12]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.0.fc_cls.weight - torch.Size([15, 1024]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.0.fc_cls.bias - torch.Size([15]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.0.fc_reg.weight - torch.Size([56, 1024]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.0.fc_reg.bias - torch.Size([56]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.0.shared_convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.0.shared_fcs.0.weight - torch.Size([1024, 12544]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.0.shared_fcs.0.bias - torch.Size([1024]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.1.fc_cls.weight - torch.Size([15, 1024]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.1.fc_cls.bias - torch.Size([15]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.1.fc_reg.weight - torch.Size([56, 1024]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.1.fc_reg.bias - torch.Size([56]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.1.shared_convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.1.shared_fcs.0.weight - torch.Size([1024, 12544]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.1.shared_fcs.0.bias - torch.Size([1024]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.2.fc_cls.weight - torch.Size([15, 1024]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.2.fc_cls.bias - torch.Size([15]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+roi_head.bbox_head.2.fc_reg.weight - torch.Size([56, 1024]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.2.fc_reg.bias - torch.Size([56]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.2.shared_convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of CascadeRCNN  
+
+roi_head.bbox_head.2.shared_fcs.0.weight - torch.Size([1024, 12544]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+roi_head.bbox_head.2.shared_fcs.0.bias - torch.Size([1024]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+2024/04/07 10:29:42 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2024/04/07 10:29:42 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2024/04/07 10:29:42 - mmengine - INFO - Checkpoints will be saved to /content/drive/MyDrive/swin_uwis/down.
+2024/04/07 10:30:07 - mmengine - INFO - Epoch(train)  [1][ 50/150]  base_lr: 9.9098e-06 lr: 9.9098e-06  eta: 0:44:41  time: 0.5013  data_time: 0.0274  memory: 9202  loss: 3.3997  loss_rpn_cls: 0.6120  loss_rpn_bbox: 0.0425  s0.loss_cls: 1.6055  s0.acc: 97.9736  s0.loss_bbox: 0.0437  s1.loss_cls: 0.7099  s1.acc: 98.8281  s1.loss_bbox: 0.0052  s2.loss_cls: 0.3803  s2.acc: 99.1455  s2.loss_bbox: 0.0006
+2024/04/07 10:30:32 - mmengine - INFO - Epoch(train)  [1][100/150]  base_lr: 1.9920e-05 lr: 1.9920e-05  eta: 0:44:04  time: 0.4968  data_time: 0.0146  memory: 9345  loss: 0.6878  loss_rpn_cls: 0.3155  loss_rpn_bbox: 0.0425  s0.loss_cls: 0.1614  s0.acc: 96.4600  s0.loss_bbox: 0.0883  s1.loss_cls: 0.0502  s1.acc: 98.1689  s1.loss_bbox: 0.0106  s2.loss_cls: 0.0185  s2.acc: 98.9990  s2.loss_bbox: 0.0009
+2024/04/07 10:30:56 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:30:56 - mmengine - INFO - Epoch(train)  [1][150/150]  base_lr: 2.9930e-05 lr: 2.9930e-05  eta: 0:43:25  time: 0.4909  data_time: 0.0144  memory: 8879  loss: 0.7267  loss_rpn_cls: 0.1169  loss_rpn_bbox: 0.0300  s0.loss_cls: 0.2597  s0.acc: 93.3105  s0.loss_bbox: 0.2046  s1.loss_cls: 0.0675  s1.acc: 97.2900  s1.loss_bbox: 0.0263  s2.loss_cls: 0.0192  s2.acc: 98.4375  s2.loss_bbox: 0.0025
+2024/04/07 10:30:56 - mmengine - INFO - Saving checkpoint at 1 epochs
+2024/04/07 10:31:03 - mmengine - INFO - Epoch(val)  [1][ 50/147]    eta: 0:00:05  time: 0.0549  data_time: 0.0053  memory: 1211  
+2024/04/07 10:31:06 - mmengine - INFO - Epoch(val)  [1][100/147]    eta: 0:00:02  time: 0.0518  data_time: 0.0023  memory: 1211  
+2024/04/07 10:31:08 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:31:08 - mmengine - ERROR - /content/mmdetection/mmdet/evaluation/metrics/coco_metric.py - compute_metrics - 465 - The testing results of the whole dataset is empty.
+2024/04/07 10:31:08 - mmengine - INFO - Epoch(val) [1][147/147]    data_time: 0.0033  time: 0.0528
+2024/04/07 10:31:08 - mmengine - WARNING - Since `metrics` is an empty dict, the behavior to save the best checkpoint will be skipped in this evaluation.
+2024/04/07 10:31:33 - mmengine - INFO - Epoch(train)  [2][ 50/150]  base_lr: 3.9940e-05 lr: 3.9940e-05  eta: 0:42:55  time: 0.4921  data_time: 0.0176  memory: 8753  loss: 0.8168  loss_rpn_cls: 0.0680  loss_rpn_bbox: 0.0271  s0.loss_cls: 0.3028  s0.acc: 93.1396  s0.loss_bbox: 0.2728  s1.loss_cls: 0.0818  s1.acc: 97.3877  s1.loss_bbox: 0.0390  s2.loss_cls: 0.0215  s2.acc: 98.9258  s2.loss_bbox: 0.0038
+2024/04/07 10:31:57 - mmengine - INFO - Epoch(train)  [2][100/150]  base_lr: 4.9950e-05 lr: 4.9950e-05  eta: 0:42:16  time: 0.4814  data_time: 0.0143  memory: 8880  loss: 0.8565  loss_rpn_cls: 0.0434  loss_rpn_bbox: 0.0240  s0.loss_cls: 0.2669  s0.acc: 92.0898  s0.loss_bbox: 0.3395  s1.loss_cls: 0.0908  s1.acc: 93.3594  s1.loss_bbox: 0.0599  s2.loss_cls: 0.0251  s2.acc: 96.9727  s2.loss_bbox: 0.0069
+2024/04/07 10:32:21 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:32:21 - mmengine - INFO - Epoch(train)  [2][150/150]  base_lr: 5.9960e-05 lr: 5.9960e-05  eta: 0:41:44  time: 0.4843  data_time: 0.0144  memory: 8817  loss: 0.9473  loss_rpn_cls: 0.0303  loss_rpn_bbox: 0.0206  s0.loss_cls: 0.2114  s0.acc: 93.9209  s0.loss_bbox: 0.3965  s1.loss_cls: 0.1005  s1.acc: 94.6777  s1.loss_bbox: 0.1256  s2.loss_cls: 0.0402  s2.acc: 95.7764  s2.loss_bbox: 0.0223
+2024/04/07 10:32:21 - mmengine - INFO - Saving checkpoint at 2 epochs
+2024/04/07 10:32:28 - mmengine - INFO - Epoch(val)  [2][ 50/147]    eta: 0:00:05  time: 0.0523  data_time: 0.0026  memory: 1211  
+2024/04/07 10:32:30 - mmengine - INFO - Epoch(val)  [2][100/147]    eta: 0:00:02  time: 0.0516  data_time: 0.0023  memory: 1211  
+2024/04/07 10:32:33 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:32:33 - mmengine - INFO - bbox_mAP_copypaste: 0.362 0.715 0.301 0.339 0.360 0.338
+2024/04/07 10:32:33 - mmengine - INFO - Epoch(val) [2][147/147]    coco/bbox_mAP: 0.3620  coco/bbox_mAP_50: 0.7150  coco/bbox_mAP_75: 0.3010  coco/bbox_mAP_s: 0.3390  coco/bbox_mAP_m: 0.3600  coco/bbox_mAP_l: 0.3380  data_time: 0.0024  time: 0.0522
+2024/04/07 10:32:59 - mmengine - INFO - Epoch(train)  [3][ 50/150]  base_lr: 6.9970e-05 lr: 6.9970e-05  eta: 0:41:26  time: 0.5000  data_time: 0.0177  memory: 8814  loss: 0.9392  loss_rpn_cls: 0.0245  loss_rpn_bbox: 0.0194  s0.loss_cls: 0.1666  s0.acc: 95.0684  s0.loss_bbox: 0.3848  s1.loss_cls: 0.0799  s1.acc: 95.1226  s1.loss_bbox: 0.1759  s2.loss_cls: 0.0408  s2.acc: 93.8005  s2.loss_bbox: 0.0472
+2024/04/07 10:33:23 - mmengine - INFO - Epoch(train)  [3][100/150]  base_lr: 7.9980e-05 lr: 7.9980e-05  eta: 0:41:01  time: 0.4913  data_time: 0.0145  memory: 8935  loss: 0.8898  loss_rpn_cls: 0.0191  loss_rpn_bbox: 0.0165  s0.loss_cls: 0.1449  s0.acc: 94.7266  s0.loss_bbox: 0.3507  s1.loss_cls: 0.0680  s1.acc: 94.5405  s1.loss_bbox: 0.1838  s2.loss_cls: 0.0371  s2.acc: 94.7121  s2.loss_bbox: 0.0698
+2024/04/07 10:33:48 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:33:48 - mmengine - INFO - Epoch(train)  [3][150/150]  base_lr: 8.9990e-05 lr: 8.9990e-05  eta: 0:40:35  time: 0.4910  data_time: 0.0145  memory: 8979  loss: 0.8436  loss_rpn_cls: 0.0182  loss_rpn_bbox: 0.0168  s0.loss_cls: 0.1378  s0.acc: 95.5566  s0.loss_bbox: 0.3190  s1.loss_cls: 0.0669  s1.acc: 96.0362  s1.loss_bbox: 0.1715  s2.loss_cls: 0.0358  s2.acc: 95.7861  s2.loss_bbox: 0.0776
+2024/04/07 10:33:48 - mmengine - INFO - Saving checkpoint at 3 epochs
+2024/04/07 10:33:54 - mmengine - INFO - Epoch(val)  [3][ 50/147]    eta: 0:00:05  time: 0.0545  data_time: 0.0026  memory: 1211  
+2024/04/07 10:33:57 - mmengine - INFO - Epoch(val)  [3][100/147]    eta: 0:00:02  time: 0.0540  data_time: 0.0023  memory: 1211  
+2024/04/07 10:34:00 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:34:00 - mmengine - INFO - bbox_mAP_copypaste: 0.613 0.931 0.748 0.619 0.619 0.664
+2024/04/07 10:34:00 - mmengine - INFO - Epoch(val) [3][147/147]    coco/bbox_mAP: 0.6130  coco/bbox_mAP_50: 0.9310  coco/bbox_mAP_75: 0.7480  coco/bbox_mAP_s: 0.6190  coco/bbox_mAP_m: 0.6190  coco/bbox_mAP_l: 0.6640  data_time: 0.0025  time: 0.0547
+2024/04/07 10:34:25 - mmengine - INFO - Epoch(train)  [4][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:40:12  time: 0.4941  data_time: 0.0166  memory: 9059  loss: 0.7782  loss_rpn_cls: 0.0149  loss_rpn_bbox: 0.0142  s0.loss_cls: 0.1216  s0.acc: 95.7764  s0.loss_bbox: 0.2974  s1.loss_cls: 0.0560  s1.acc: 96.1701  s1.loss_bbox: 0.1642  s2.loss_cls: 0.0302  s2.acc: 96.9712  s2.loss_bbox: 0.0795
+2024/04/07 10:34:49 - mmengine - INFO - Epoch(train)  [4][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:39:46  time: 0.4887  data_time: 0.0140  memory: 9250  loss: 0.7686  loss_rpn_cls: 0.0139  loss_rpn_bbox: 0.0156  s0.loss_cls: 0.1188  s0.acc: 96.4844  s0.loss_bbox: 0.3006  s1.loss_cls: 0.0522  s1.acc: 97.5478  s1.loss_bbox: 0.1606  s2.loss_cls: 0.0268  s2.acc: 97.5954  s2.loss_bbox: 0.0800
+2024/04/07 10:35:14 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:35:14 - mmengine - INFO - Epoch(train)  [4][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:39:20  time: 0.4901  data_time: 0.0143  memory: 8937  loss: 0.7324  loss_rpn_cls: 0.0135  loss_rpn_bbox: 0.0132  s0.loss_cls: 0.1094  s0.acc: 96.5088  s0.loss_bbox: 0.2879  s1.loss_cls: 0.0478  s1.acc: 96.7861  s1.loss_bbox: 0.1577  s2.loss_cls: 0.0237  s2.acc: 96.8124  s2.loss_bbox: 0.0791
+2024/04/07 10:35:14 - mmengine - INFO - Saving checkpoint at 4 epochs
+2024/04/07 10:35:20 - mmengine - INFO - Epoch(val)  [4][ 50/147]    eta: 0:00:05  time: 0.0540  data_time: 0.0026  memory: 1211  
+2024/04/07 10:35:23 - mmengine - INFO - Epoch(val)  [4][100/147]    eta: 0:00:02  time: 0.0532  data_time: 0.0025  memory: 1211  
+2024/04/07 10:35:26 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:35:26 - mmengine - INFO - bbox_mAP_copypaste: 0.691 0.957 0.826 0.666 0.711 0.780
+2024/04/07 10:35:26 - mmengine - INFO - Epoch(val) [4][147/147]    coco/bbox_mAP: 0.6910  coco/bbox_mAP_50: 0.9570  coco/bbox_mAP_75: 0.8260  coco/bbox_mAP_s: 0.6660  coco/bbox_mAP_m: 0.7110  coco/bbox_mAP_l: 0.7800  data_time: 0.0025  time: 0.0534
+2024/04/07 10:35:51 - mmengine - INFO - Epoch(train)  [5][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:38:57  time: 0.4957  data_time: 0.0158  memory: 9179  loss: 0.6682  loss_rpn_cls: 0.0114  loss_rpn_bbox: 0.0127  s0.loss_cls: 0.0985  s0.acc: 96.8018  s0.loss_bbox: 0.2659  s1.loss_cls: 0.0411  s1.acc: 97.5713  s1.loss_bbox: 0.1451  s2.loss_cls: 0.0207  s2.acc: 97.3210  s2.loss_bbox: 0.0728
+2024/04/07 10:36:15 - mmengine - INFO - Epoch(train)  [5][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:38:32  time: 0.4896  data_time: 0.0137  memory: 8911  loss: 0.6480  loss_rpn_cls: 0.0102  loss_rpn_bbox: 0.0128  s0.loss_cls: 0.0947  s0.acc: 96.5820  s0.loss_bbox: 0.2605  s1.loss_cls: 0.0391  s1.acc: 97.1306  s1.loss_bbox: 0.1408  s2.loss_cls: 0.0185  s2.acc: 96.9199  s2.loss_bbox: 0.0714
+2024/04/07 10:36:40 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:36:40 - mmengine - INFO - Epoch(train)  [5][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:38:06  time: 0.4876  data_time: 0.0136  memory: 9008  loss: 0.6423  loss_rpn_cls: 0.0099  loss_rpn_bbox: 0.0131  s0.loss_cls: 0.0940  s0.acc: 96.3379  s0.loss_bbox: 0.2580  s1.loss_cls: 0.0386  s1.acc: 97.4938  s1.loss_bbox: 0.1400  s2.loss_cls: 0.0184  s2.acc: 97.8217  s2.loss_bbox: 0.0704
+2024/04/07 10:36:40 - mmengine - INFO - Saving checkpoint at 5 epochs
+2024/04/07 10:36:46 - mmengine - INFO - Epoch(val)  [5][ 50/147]    eta: 0:00:05  time: 0.0541  data_time: 0.0026  memory: 1211  
+2024/04/07 10:36:49 - mmengine - INFO - Epoch(val)  [5][100/147]    eta: 0:00:02  time: 0.0532  data_time: 0.0024  memory: 1211  
+2024/04/07 10:36:52 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:36:52 - mmengine - INFO - bbox_mAP_copypaste: 0.733 0.975 0.866 0.673 0.751 0.906
+2024/04/07 10:36:52 - mmengine - INFO - Epoch(val) [5][147/147]    coco/bbox_mAP: 0.7330  coco/bbox_mAP_50: 0.9750  coco/bbox_mAP_75: 0.8660  coco/bbox_mAP_s: 0.6730  coco/bbox_mAP_m: 0.7510  coco/bbox_mAP_l: 0.9060  data_time: 0.0024  time: 0.0534
+2024/04/07 10:37:17 - mmengine - INFO - Epoch(train)  [6][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:37:42  time: 0.4938  data_time: 0.0162  memory: 9540  loss: 0.6340  loss_rpn_cls: 0.0091  loss_rpn_bbox: 0.0115  s0.loss_cls: 0.0931  s0.acc: 96.5088  s0.loss_bbox: 0.2552  s1.loss_cls: 0.0379  s1.acc: 97.1689  s1.loss_bbox: 0.1387  s2.loss_cls: 0.0180  s2.acc: 97.2599  s2.loss_bbox: 0.0705
+2024/04/07 10:37:41 - mmengine - INFO - Epoch(train)  [6][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:37:16  time: 0.4877  data_time: 0.0142  memory: 9104  loss: 0.5840  loss_rpn_cls: 0.0098  loss_rpn_bbox: 0.0116  s0.loss_cls: 0.0834  s0.acc: 96.7285  s0.loss_bbox: 0.2330  s1.loss_cls: 0.0334  s1.acc: 97.3605  s1.loss_bbox: 0.1304  s2.loss_cls: 0.0164  s2.acc: 97.7966  s2.loss_bbox: 0.0660
+2024/04/07 10:38:06 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:38:06 - mmengine - INFO - Epoch(train)  [6][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:36:51  time: 0.4914  data_time: 0.0141  memory: 9389  loss: 0.5842  loss_rpn_cls: 0.0090  loss_rpn_bbox: 0.0117  s0.loss_cls: 0.0806  s0.acc: 96.1426  s0.loss_bbox: 0.2440  s1.loss_cls: 0.0300  s1.acc: 97.1032  s1.loss_bbox: 0.1303  s2.loss_cls: 0.0141  s2.acc: 96.9514  s2.loss_bbox: 0.0645
+2024/04/07 10:38:06 - mmengine - INFO - Saving checkpoint at 6 epochs
+2024/04/07 10:38:12 - mmengine - INFO - Epoch(val)  [6][ 50/147]    eta: 0:00:05  time: 0.0539  data_time: 0.0026  memory: 1211  
+2024/04/07 10:38:15 - mmengine - INFO - Epoch(val)  [6][100/147]    eta: 0:00:02  time: 0.0527  data_time: 0.0023  memory: 1211  
+2024/04/07 10:38:17 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:38:18 - mmengine - INFO - bbox_mAP_copypaste: 0.740 0.968 0.884 0.702 0.771 0.849
+2024/04/07 10:38:18 - mmengine - INFO - Epoch(val) [6][147/147]    coco/bbox_mAP: 0.7400  coco/bbox_mAP_50: 0.9680  coco/bbox_mAP_75: 0.8840  coco/bbox_mAP_s: 0.7020  coco/bbox_mAP_m: 0.7710  coco/bbox_mAP_l: 0.8490  data_time: 0.0024  time: 0.0530
+2024/04/07 10:38:42 - mmengine - INFO - Epoch(train)  [7][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:36:26  time: 0.4869  data_time: 0.0161  memory: 8895  loss: 0.5523  loss_rpn_cls: 0.0091  loss_rpn_bbox: 0.0107  s0.loss_cls: 0.0766  s0.acc: 97.3877  s0.loss_bbox: 0.2268  s1.loss_cls: 0.0286  s1.acc: 98.6476  s1.loss_bbox: 0.1254  s2.loss_cls: 0.0128  s2.acc: 98.8979  s2.loss_bbox: 0.0621
+2024/04/07 10:39:07 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:39:07 - mmengine - INFO - Epoch(train)  [7][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:36:01  time: 0.4901  data_time: 0.0141  memory: 9487  loss: 0.5654  loss_rpn_cls: 0.0100  loss_rpn_bbox: 0.0121  s0.loss_cls: 0.0811  s0.acc: 97.0947  s0.loss_bbox: 0.2311  s1.loss_cls: 0.0309  s1.acc: 97.5163  s1.loss_bbox: 0.1242  s2.loss_cls: 0.0144  s2.acc: 97.3780  s2.loss_bbox: 0.0616
+2024/04/07 10:39:31 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:39:31 - mmengine - INFO - Epoch(train)  [7][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:35:36  time: 0.4872  data_time: 0.0138  memory: 9495  loss: 0.5336  loss_rpn_cls: 0.0101  loss_rpn_bbox: 0.0118  s0.loss_cls: 0.0729  s0.acc: 97.2656  s0.loss_bbox: 0.2167  s1.loss_cls: 0.0270  s1.acc: 97.9720  s1.loss_bbox: 0.1217  s2.loss_cls: 0.0128  s2.acc: 98.1675  s2.loss_bbox: 0.0605
+2024/04/07 10:39:31 - mmengine - INFO - Saving checkpoint at 7 epochs
+2024/04/07 10:39:38 - mmengine - INFO - Epoch(val)  [7][ 50/147]    eta: 0:00:05  time: 0.0538  data_time: 0.0029  memory: 1211  
+2024/04/07 10:39:40 - mmengine - INFO - Epoch(val)  [7][100/147]    eta: 0:00:02  time: 0.0528  data_time: 0.0028  memory: 1211  
+2024/04/07 10:39:43 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:39:43 - mmengine - INFO - bbox_mAP_copypaste: 0.771 0.981 0.909 0.712 0.796 0.870
+2024/04/07 10:39:43 - mmengine - INFO - Epoch(val) [7][147/147]    coco/bbox_mAP: 0.7710  coco/bbox_mAP_50: 0.9810  coco/bbox_mAP_75: 0.9090  coco/bbox_mAP_s: 0.7120  coco/bbox_mAP_m: 0.7960  coco/bbox_mAP_l: 0.8700  data_time: 0.0028  time: 0.0530
+2024/04/07 10:40:08 - mmengine - INFO - Epoch(train)  [8][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:35:13  time: 0.4986  data_time: 0.0167  memory: 9296  loss: 0.5267  loss_rpn_cls: 0.0086  loss_rpn_bbox: 0.0097  s0.loss_cls: 0.0752  s0.acc: 97.4121  s0.loss_bbox: 0.2179  s1.loss_cls: 0.0262  s1.acc: 97.5561  s1.loss_bbox: 0.1182  s2.loss_cls: 0.0127  s2.acc: 98.4010  s2.loss_bbox: 0.0581
+2024/04/07 10:40:33 - mmengine - INFO - Epoch(train)  [8][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:34:48  time: 0.4927  data_time: 0.0142  memory: 9045  loss: 0.5101  loss_rpn_cls: 0.0076  loss_rpn_bbox: 0.0104  s0.loss_cls: 0.0682  s0.acc: 97.0459  s0.loss_bbox: 0.2148  s1.loss_cls: 0.0231  s1.acc: 97.3633  s1.loss_bbox: 0.1174  s2.loss_cls: 0.0104  s2.acc: 97.4013  s2.loss_bbox: 0.0582
+2024/04/07 10:40:57 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:40:57 - mmengine - INFO - Epoch(train)  [8][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:34:23  time: 0.4887  data_time: 0.0137  memory: 9441  loss: 0.5240  loss_rpn_cls: 0.0081  loss_rpn_bbox: 0.0100  s0.loss_cls: 0.0735  s0.acc: 97.5342  s0.loss_bbox: 0.2172  s1.loss_cls: 0.0262  s1.acc: 98.6656  s1.loss_bbox: 0.1190  s2.loss_cls: 0.0111  s2.acc: 98.8320  s2.loss_bbox: 0.0589
+2024/04/07 10:40:57 - mmengine - INFO - Saving checkpoint at 8 epochs
+2024/04/07 10:41:04 - mmengine - INFO - Epoch(val)  [8][ 50/147]    eta: 0:00:05  time: 0.0532  data_time: 0.0026  memory: 1211  
+2024/04/07 10:41:06 - mmengine - INFO - Epoch(val)  [8][100/147]    eta: 0:00:02  time: 0.0524  data_time: 0.0023  memory: 1211  
+2024/04/07 10:41:09 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:41:09 - mmengine - INFO - bbox_mAP_copypaste: 0.768 0.988 0.909 0.728 0.790 0.909
+2024/04/07 10:41:09 - mmengine - INFO - Epoch(val) [8][147/147]    coco/bbox_mAP: 0.7680  coco/bbox_mAP_50: 0.9880  coco/bbox_mAP_75: 0.9090  coco/bbox_mAP_s: 0.7280  coco/bbox_mAP_m: 0.7900  coco/bbox_mAP_l: 0.9090  data_time: 0.0024  time: 0.0526
+2024/04/07 10:41:34 - mmengine - INFO - Epoch(train)  [9][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:33:59  time: 0.4945  data_time: 0.0157  memory: 8899  loss: 0.4942  loss_rpn_cls: 0.0077  loss_rpn_bbox: 0.0099  s0.loss_cls: 0.0672  s0.acc: 97.1924  s0.loss_bbox: 0.2098  s1.loss_cls: 0.0214  s1.acc: 98.6058  s1.loss_bbox: 0.1127  s2.loss_cls: 0.0098  s2.acc: 98.8402  s2.loss_bbox: 0.0558
+2024/04/07 10:41:59 - mmengine - INFO - Epoch(train)  [9][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:33:35  time: 0.4932  data_time: 0.0140  memory: 8861  loss: 0.4919  loss_rpn_cls: 0.0070  loss_rpn_bbox: 0.0095  s0.loss_cls: 0.0649  s0.acc: 97.3145  s0.loss_bbox: 0.2107  s1.loss_cls: 0.0214  s1.acc: 98.5165  s1.loss_bbox: 0.1127  s2.loss_cls: 0.0096  s2.acc: 98.9806  s2.loss_bbox: 0.0560
+2024/04/07 10:42:23 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:42:23 - mmengine - INFO - Epoch(train)  [9][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:33:10  time: 0.4902  data_time: 0.0142  memory: 9070  loss: 0.4827  loss_rpn_cls: 0.0071  loss_rpn_bbox: 0.0092  s0.loss_cls: 0.0673  s0.acc: 96.9482  s0.loss_bbox: 0.2025  s1.loss_cls: 0.0218  s1.acc: 98.7472  s1.loss_bbox: 0.1108  s2.loss_cls: 0.0099  s2.acc: 98.0993  s2.loss_bbox: 0.0541
+2024/04/07 10:42:23 - mmengine - INFO - Saving checkpoint at 9 epochs
+2024/04/07 10:42:30 - mmengine - INFO - Epoch(val)  [9][ 50/147]    eta: 0:00:05  time: 0.0533  data_time: 0.0026  memory: 1211  
+2024/04/07 10:42:32 - mmengine - INFO - Epoch(val)  [9][100/147]    eta: 0:00:02  time: 0.0532  data_time: 0.0024  memory: 1211  
+2024/04/07 10:42:35 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:42:35 - mmengine - INFO - bbox_mAP_copypaste: 0.783 0.982 0.940 0.737 0.803 0.889
+2024/04/07 10:42:35 - mmengine - INFO - Epoch(val) [9][147/147]    coco/bbox_mAP: 0.7830  coco/bbox_mAP_50: 0.9820  coco/bbox_mAP_75: 0.9400  coco/bbox_mAP_s: 0.7370  coco/bbox_mAP_m: 0.8030  coco/bbox_mAP_l: 0.8890  data_time: 0.0025  time: 0.0536
+2024/04/07 10:43:00 - mmengine - INFO - Epoch(train) [10][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:32:47  time: 0.4998  data_time: 0.0160  memory: 8771  loss: 0.4752  loss_rpn_cls: 0.0079  loss_rpn_bbox: 0.0087  s0.loss_cls: 0.0651  s0.acc: 97.5342  s0.loss_bbox: 0.2000  s1.loss_cls: 0.0206  s1.acc: 98.6241  s1.loss_bbox: 0.1095  s2.loss_cls: 0.0089  s2.acc: 98.4946  s2.loss_bbox: 0.0545
+2024/04/07 10:43:25 - mmengine - INFO - Epoch(train) [10][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:32:22  time: 0.4892  data_time: 0.0139  memory: 8676  loss: 0.4713  loss_rpn_cls: 0.0082  loss_rpn_bbox: 0.0089  s0.loss_cls: 0.0642  s0.acc: 97.9248  s0.loss_bbox: 0.2045  s1.loss_cls: 0.0186  s1.acc: 98.7981  s1.loss_bbox: 0.1065  s2.loss_cls: 0.0079  s2.acc: 98.9627  s2.loss_bbox: 0.0525
+2024/04/07 10:43:49 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:43:49 - mmengine - INFO - Epoch(train) [10][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:31:57  time: 0.4909  data_time: 0.0141  memory: 9296  loss: 0.4619  loss_rpn_cls: 0.0064  loss_rpn_bbox: 0.0090  s0.loss_cls: 0.0640  s0.acc: 98.2422  s0.loss_bbox: 0.1934  s1.loss_cls: 0.0204  s1.acc: 99.2686  s1.loss_bbox: 0.1073  s2.loss_cls: 0.0086  s2.acc: 99.2613  s2.loss_bbox: 0.0526
+2024/04/07 10:43:49 - mmengine - INFO - Saving checkpoint at 10 epochs
+2024/04/07 10:43:56 - mmengine - INFO - Epoch(val) [10][ 50/147]    eta: 0:00:05  time: 0.0525  data_time: 0.0028  memory: 1211  
+2024/04/07 10:43:58 - mmengine - INFO - Epoch(val) [10][100/147]    eta: 0:00:02  time: 0.0522  data_time: 0.0025  memory: 1211  
+2024/04/07 10:44:01 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:44:01 - mmengine - INFO - bbox_mAP_copypaste: 0.777 0.988 0.931 0.722 0.804 0.880
+2024/04/07 10:44:01 - mmengine - INFO - Epoch(val) [10][147/147]    coco/bbox_mAP: 0.7770  coco/bbox_mAP_50: 0.9880  coco/bbox_mAP_75: 0.9310  coco/bbox_mAP_s: 0.7220  coco/bbox_mAP_m: 0.8040  coco/bbox_mAP_l: 0.8800  data_time: 0.0026  time: 0.0524
+2024/04/07 10:44:26 - mmengine - INFO - Epoch(train) [11][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:31:34  time: 0.5034  data_time: 0.0171  memory: 8867  loss: 0.4484  loss_rpn_cls: 0.0064  loss_rpn_bbox: 0.0086  s0.loss_cls: 0.0576  s0.acc: 98.2666  s0.loss_bbox: 0.1921  s1.loss_cls: 0.0172  s1.acc: 99.0869  s1.loss_bbox: 0.1064  s2.loss_cls: 0.0077  s2.acc: 99.1246  s2.loss_bbox: 0.0524
+2024/04/07 10:44:51 - mmengine - INFO - Epoch(train) [11][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:31:09  time: 0.4914  data_time: 0.0136  memory: 8630  loss: 0.4666  loss_rpn_cls: 0.0075  loss_rpn_bbox: 0.0093  s0.loss_cls: 0.0616  s0.acc: 97.8516  s0.loss_bbox: 0.2001  s1.loss_cls: 0.0188  s1.acc: 99.0394  s1.loss_bbox: 0.1082  s2.loss_cls: 0.0078  s2.acc: 98.0373  s2.loss_bbox: 0.0534
+2024/04/07 10:45:16 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:45:16 - mmengine - INFO - Epoch(train) [11][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:30:44  time: 0.4900  data_time: 0.0141  memory: 9124  loss: 0.4415  loss_rpn_cls: 0.0073  loss_rpn_bbox: 0.0086  s0.loss_cls: 0.0599  s0.acc: 97.8027  s0.loss_bbox: 0.1859  s1.loss_cls: 0.0196  s1.acc: 98.7218  s1.loss_bbox: 0.1022  s2.loss_cls: 0.0082  s2.acc: 99.0328  s2.loss_bbox: 0.0499
+2024/04/07 10:45:16 - mmengine - INFO - Saving checkpoint at 11 epochs
+2024/04/07 10:45:22 - mmengine - INFO - Epoch(val) [11][ 50/147]    eta: 0:00:05  time: 0.0524  data_time: 0.0026  memory: 1211  
+2024/04/07 10:45:25 - mmengine - INFO - Epoch(val) [11][100/147]    eta: 0:00:02  time: 0.0521  data_time: 0.0023  memory: 1211  
+2024/04/07 10:45:27 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:45:27 - mmengine - INFO - bbox_mAP_copypaste: 0.788 0.991 0.939 0.742 0.817 0.916
+2024/04/07 10:45:27 - mmengine - INFO - Epoch(val) [11][147/147]    coco/bbox_mAP: 0.7880  coco/bbox_mAP_50: 0.9910  coco/bbox_mAP_75: 0.9390  coco/bbox_mAP_s: 0.7420  coco/bbox_mAP_m: 0.8170  coco/bbox_mAP_l: 0.9160  data_time: 0.0024  time: 0.0525
+2024/04/07 10:45:52 - mmengine - INFO - Epoch(train) [12][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:30:20  time: 0.4956  data_time: 0.0164  memory: 8669  loss: 0.4291  loss_rpn_cls: 0.0057  loss_rpn_bbox: 0.0082  s0.loss_cls: 0.0585  s0.acc: 98.5840  s0.loss_bbox: 0.1821  s1.loss_cls: 0.0182  s1.acc: 99.2101  s1.loss_bbox: 0.0994  s2.loss_cls: 0.0077  s2.acc: 99.2304  s2.loss_bbox: 0.0493
+2024/04/07 10:46:17 - mmengine - INFO - Epoch(train) [12][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:29:56  time: 0.4947  data_time: 0.0137  memory: 9158  loss: 0.4435  loss_rpn_cls: 0.0058  loss_rpn_bbox: 0.0090  s0.loss_cls: 0.0587  s0.acc: 98.0469  s0.loss_bbox: 0.1890  s1.loss_cls: 0.0186  s1.acc: 98.5104  s1.loss_bbox: 0.1035  s2.loss_cls: 0.0078  s2.acc: 99.4742  s2.loss_bbox: 0.0510
+2024/04/07 10:46:42 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:46:42 - mmengine - INFO - Epoch(train) [12][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:29:31  time: 0.4944  data_time: 0.0140  memory: 9375  loss: 0.4214  loss_rpn_cls: 0.0063  loss_rpn_bbox: 0.0092  s0.loss_cls: 0.0583  s0.acc: 97.8760  s0.loss_bbox: 0.1782  s1.loss_cls: 0.0174  s1.acc: 98.8224  s1.loss_bbox: 0.0973  s2.loss_cls: 0.0072  s2.acc: 98.7847  s2.loss_bbox: 0.0476
+2024/04/07 10:46:42 - mmengine - INFO - Saving checkpoint at 12 epochs
+2024/04/07 10:46:48 - mmengine - INFO - Epoch(val) [12][ 50/147]    eta: 0:00:05  time: 0.0527  data_time: 0.0025  memory: 1211  
+2024/04/07 10:46:51 - mmengine - INFO - Epoch(val) [12][100/147]    eta: 0:00:02  time: 0.0522  data_time: 0.0023  memory: 1211  
+2024/04/07 10:46:53 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:46:54 - mmengine - INFO - bbox_mAP_copypaste: 0.791 0.992 0.936 0.737 0.820 0.898
+2024/04/07 10:46:54 - mmengine - INFO - Epoch(val) [12][147/147]    coco/bbox_mAP: 0.7910  coco/bbox_mAP_50: 0.9920  coco/bbox_mAP_75: 0.9360  coco/bbox_mAP_s: 0.7370  coco/bbox_mAP_m: 0.8200  coco/bbox_mAP_l: 0.8980  data_time: 0.0024  time: 0.0529
+2024/04/07 10:47:19 - mmengine - INFO - Epoch(train) [13][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:29:07  time: 0.4988  data_time: 0.0163  memory: 8832  loss: 0.4141  loss_rpn_cls: 0.0057  loss_rpn_bbox: 0.0087  s0.loss_cls: 0.0532  s0.acc: 98.5107  s0.loss_bbox: 0.1803  s1.loss_cls: 0.0155  s1.acc: 99.1607  s1.loss_bbox: 0.0966  s2.loss_cls: 0.0066  s2.acc: 99.5000  s2.loss_bbox: 0.0475
+2024/04/07 10:47:43 - mmengine - INFO - Epoch(train) [13][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:28:43  time: 0.4930  data_time: 0.0143  memory: 9458  loss: 0.3885  loss_rpn_cls: 0.0061  loss_rpn_bbox: 0.0085  s0.loss_cls: 0.0506  s0.acc: 98.2422  s0.loss_bbox: 0.1651  s1.loss_cls: 0.0147  s1.acc: 98.6305  s1.loss_bbox: 0.0918  s2.loss_cls: 0.0059  s2.acc: 99.1375  s2.loss_bbox: 0.0458
+2024/04/07 10:48:08 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:48:08 - mmengine - INFO - Epoch(train) [13][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:28:18  time: 0.4947  data_time: 0.0140  memory: 8869  loss: 0.4031  loss_rpn_cls: 0.0058  loss_rpn_bbox: 0.0087  s0.loss_cls: 0.0537  s0.acc: 96.9727  s0.loss_bbox: 0.1715  s1.loss_cls: 0.0169  s1.acc: 97.5382  s1.loss_bbox: 0.0934  s2.loss_cls: 0.0070  s2.acc: 97.7595  s2.loss_bbox: 0.0462
+2024/04/07 10:48:08 - mmengine - INFO - Saving checkpoint at 13 epochs
+2024/04/07 10:48:15 - mmengine - INFO - Epoch(val) [13][ 50/147]    eta: 0:00:05  time: 0.0535  data_time: 0.0026  memory: 1211  
+2024/04/07 10:48:17 - mmengine - INFO - Epoch(val) [13][100/147]    eta: 0:00:02  time: 0.0533  data_time: 0.0027  memory: 1211  
+2024/04/07 10:48:20 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:48:20 - mmengine - INFO - bbox_mAP_copypaste: 0.810 0.991 0.953 0.772 0.829 0.888
+2024/04/07 10:48:20 - mmengine - INFO - Epoch(val) [13][147/147]    coco/bbox_mAP: 0.8100  coco/bbox_mAP_50: 0.9910  coco/bbox_mAP_75: 0.9530  coco/bbox_mAP_s: 0.7720  coco/bbox_mAP_m: 0.8290  coco/bbox_mAP_l: 0.8880  data_time: 0.0027  time: 0.0535
+2024/04/07 10:48:46 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:48:46 - mmengine - INFO - Epoch(train) [14][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:27:55  time: 0.5068  data_time: 0.0164  memory: 9339  loss: 0.3856  loss_rpn_cls: 0.0067  loss_rpn_bbox: 0.0087  s0.loss_cls: 0.0514  s0.acc: 97.9248  s0.loss_bbox: 0.1648  s1.loss_cls: 0.0148  s1.acc: 99.0401  s1.loss_bbox: 0.0895  s2.loss_cls: 0.0061  s2.acc: 99.2772  s2.loss_bbox: 0.0436
+2024/04/07 10:49:10 - mmengine - INFO - Epoch(train) [14][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:27:30  time: 0.4911  data_time: 0.0140  memory: 8841  loss: 0.3949  loss_rpn_cls: 0.0061  loss_rpn_bbox: 0.0083  s0.loss_cls: 0.0518  s0.acc: 97.9492  s0.loss_bbox: 0.1697  s1.loss_cls: 0.0142  s1.acc: 98.7000  s1.loss_bbox: 0.0930  s2.loss_cls: 0.0059  s2.acc: 99.3320  s2.loss_bbox: 0.0460
+2024/04/07 10:49:35 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:49:35 - mmengine - INFO - Epoch(train) [14][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:27:06  time: 0.4928  data_time: 0.0139  memory: 8969  loss: 0.3978  loss_rpn_cls: 0.0055  loss_rpn_bbox: 0.0075  s0.loss_cls: 0.0533  s0.acc: 97.6807  s0.loss_bbox: 0.1720  s1.loss_cls: 0.0150  s1.acc: 98.5555  s1.loss_bbox: 0.0929  s2.loss_cls: 0.0057  s2.acc: 99.2733  s2.loss_bbox: 0.0461
+2024/04/07 10:49:35 - mmengine - INFO - Saving checkpoint at 14 epochs
+2024/04/07 10:49:41 - mmengine - INFO - Epoch(val) [14][ 50/147]    eta: 0:00:05  time: 0.0537  data_time: 0.0027  memory: 1211  
+2024/04/07 10:49:44 - mmengine - INFO - Epoch(val) [14][100/147]    eta: 0:00:02  time: 0.0524  data_time: 0.0023  memory: 1211  
+2024/04/07 10:49:47 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:49:47 - mmengine - INFO - bbox_mAP_copypaste: 0.802 0.992 0.942 0.767 0.831 0.953
+2024/04/07 10:49:47 - mmengine - INFO - Epoch(val) [14][147/147]    coco/bbox_mAP: 0.8020  coco/bbox_mAP_50: 0.9920  coco/bbox_mAP_75: 0.9420  coco/bbox_mAP_s: 0.7670  coco/bbox_mAP_m: 0.8310  coco/bbox_mAP_l: 0.9530  data_time: 0.0024  time: 0.0529
+2024/04/07 10:50:12 - mmengine - INFO - Epoch(train) [15][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:26:41  time: 0.4968  data_time: 0.0163  memory: 8848  loss: 0.4050  loss_rpn_cls: 0.0075  loss_rpn_bbox: 0.0074  s0.loss_cls: 0.0541  s0.acc: 97.6562  s0.loss_bbox: 0.1753  s1.loss_cls: 0.0156  s1.acc: 98.0412  s1.loss_bbox: 0.0930  s2.loss_cls: 0.0065  s2.acc: 98.8972  s2.loss_bbox: 0.0457
+2024/04/07 10:50:37 - mmengine - INFO - Epoch(train) [15][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:26:17  time: 0.4987  data_time: 0.0144  memory: 9010  loss: 0.3896  loss_rpn_cls: 0.0059  loss_rpn_bbox: 0.0075  s0.loss_cls: 0.0527  s0.acc: 98.4375  s0.loss_bbox: 0.1660  s1.loss_cls: 0.0152  s1.acc: 99.2105  s1.loss_bbox: 0.0915  s2.loss_cls: 0.0063  s2.acc: 99.0303  s2.loss_bbox: 0.0444
+2024/04/07 10:51:01 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:51:01 - mmengine - INFO - Epoch(train) [15][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:25:53  time: 0.4961  data_time: 0.0146  memory: 9076  loss: 0.3958  loss_rpn_cls: 0.0060  loss_rpn_bbox: 0.0084  s0.loss_cls: 0.0517  s0.acc: 97.8027  s0.loss_bbox: 0.1689  s1.loss_cls: 0.0141  s1.acc: 98.7883  s1.loss_bbox: 0.0940  s2.loss_cls: 0.0061  s2.acc: 98.9742  s2.loss_bbox: 0.0466
+2024/04/07 10:51:01 - mmengine - INFO - Saving checkpoint at 15 epochs
+2024/04/07 10:51:08 - mmengine - INFO - Epoch(val) [15][ 50/147]    eta: 0:00:05  time: 0.0534  data_time: 0.0029  memory: 1211  
+2024/04/07 10:51:11 - mmengine - INFO - Epoch(val) [15][100/147]    eta: 0:00:02  time: 0.0529  data_time: 0.0026  memory: 1211  
+2024/04/07 10:51:13 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:51:14 - mmengine - INFO - bbox_mAP_copypaste: 0.808 0.994 0.944 0.748 0.843 0.914
+2024/04/07 10:51:14 - mmengine - INFO - Epoch(val) [15][147/147]    coco/bbox_mAP: 0.8080  coco/bbox_mAP_50: 0.9940  coco/bbox_mAP_75: 0.9440  coco/bbox_mAP_s: 0.7480  coco/bbox_mAP_m: 0.8430  coco/bbox_mAP_l: 0.9140  data_time: 0.0027  time: 0.0536
+2024/04/07 10:51:39 - mmengine - INFO - Epoch(train) [16][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:25:29  time: 0.5015  data_time: 0.0158  memory: 8817  loss: 0.3977  loss_rpn_cls: 0.0057  loss_rpn_bbox: 0.0077  s0.loss_cls: 0.0531  s0.acc: 97.5098  s0.loss_bbox: 0.1724  s1.loss_cls: 0.0159  s1.acc: 98.5678  s1.loss_bbox: 0.0917  s2.loss_cls: 0.0060  s2.acc: 99.1508  s2.loss_bbox: 0.0451
+2024/04/07 10:52:04 - mmengine - INFO - Epoch(train) [16][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:25:04  time: 0.4959  data_time: 0.0142  memory: 9168  loss: 0.3746  loss_rpn_cls: 0.0066  loss_rpn_bbox: 0.0085  s0.loss_cls: 0.0478  s0.acc: 97.0215  s0.loss_bbox: 0.1631  s1.loss_cls: 0.0135  s1.acc: 98.3154  s1.loss_bbox: 0.0870  s2.loss_cls: 0.0054  s2.acc: 98.3570  s2.loss_bbox: 0.0428
+2024/04/07 10:52:28 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:52:28 - mmengine - INFO - Epoch(train) [16][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:24:39  time: 0.4930  data_time: 0.0136  memory: 9029  loss: 0.3768  loss_rpn_cls: 0.0053  loss_rpn_bbox: 0.0077  s0.loss_cls: 0.0492  s0.acc: 98.1445  s0.loss_bbox: 0.1643  s1.loss_cls: 0.0128  s1.acc: 99.2561  s1.loss_bbox: 0.0888  s2.loss_cls: 0.0053  s2.acc: 99.3723  s2.loss_bbox: 0.0435
+2024/04/07 10:52:28 - mmengine - INFO - Saving checkpoint at 16 epochs
+2024/04/07 10:52:35 - mmengine - INFO - Epoch(val) [16][ 50/147]    eta: 0:00:05  time: 0.0529  data_time: 0.0026  memory: 1211  
+2024/04/07 10:52:38 - mmengine - INFO - Epoch(val) [16][100/147]    eta: 0:00:02  time: 0.0522  data_time: 0.0025  memory: 1211  
+2024/04/07 10:52:40 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:52:40 - mmengine - INFO - bbox_mAP_copypaste: 0.809 0.987 0.958 0.771 0.839 0.899
+2024/04/07 10:52:40 - mmengine - INFO - Epoch(val) [16][147/147]    coco/bbox_mAP: 0.8090  coco/bbox_mAP_50: 0.9870  coco/bbox_mAP_75: 0.9580  coco/bbox_mAP_s: 0.7710  coco/bbox_mAP_m: 0.8390  coco/bbox_mAP_l: 0.8990  data_time: 0.0025  time: 0.0529
+2024/04/07 10:53:05 - mmengine - INFO - Epoch(train) [17][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:24:15  time: 0.4961  data_time: 0.0159  memory: 9222  loss: 0.3648  loss_rpn_cls: 0.0054  loss_rpn_bbox: 0.0074  s0.loss_cls: 0.0490  s0.acc: 97.4121  s0.loss_bbox: 0.1596  s1.loss_cls: 0.0123  s1.acc: 98.3398  s1.loss_bbox: 0.0843  s2.loss_cls: 0.0051  s2.acc: 98.8258  s2.loss_bbox: 0.0417
+2024/04/07 10:53:30 - mmengine - INFO - Epoch(train) [17][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:23:51  time: 0.4987  data_time: 0.0139  memory: 9132  loss: 0.3608  loss_rpn_cls: 0.0058  loss_rpn_bbox: 0.0073  s0.loss_cls: 0.0485  s0.acc: 97.7295  s0.loss_bbox: 0.1556  s1.loss_cls: 0.0126  s1.acc: 98.3260  s1.loss_bbox: 0.0844  s2.loss_cls: 0.0049  s2.acc: 98.7071  s2.loss_bbox: 0.0417
+2024/04/07 10:53:55 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:53:55 - mmengine - INFO - Epoch(train) [17][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:23:26  time: 0.4957  data_time: 0.0137  memory: 8881  loss: 0.3525  loss_rpn_cls: 0.0056  loss_rpn_bbox: 0.0072  s0.loss_cls: 0.0454  s0.acc: 97.3877  s0.loss_bbox: 0.1547  s1.loss_cls: 0.0111  s1.acc: 98.1432  s1.loss_bbox: 0.0836  s2.loss_cls: 0.0038  s2.acc: 98.7996  s2.loss_bbox: 0.0411
+2024/04/07 10:53:55 - mmengine - INFO - Saving checkpoint at 17 epochs
+2024/04/07 10:54:02 - mmengine - INFO - Epoch(val) [17][ 50/147]    eta: 0:00:05  time: 0.0527  data_time: 0.0027  memory: 1211  
+2024/04/07 10:54:04 - mmengine - INFO - Epoch(val) [17][100/147]    eta: 0:00:02  time: 0.0522  data_time: 0.0024  memory: 1211  
+2024/04/07 10:54:07 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:54:07 - mmengine - INFO - bbox_mAP_copypaste: 0.814 0.992 0.953 0.776 0.845 0.898
+2024/04/07 10:54:07 - mmengine - INFO - Epoch(val) [17][147/147]    coco/bbox_mAP: 0.8140  coco/bbox_mAP_50: 0.9920  coco/bbox_mAP_75: 0.9530  coco/bbox_mAP_s: 0.7760  coco/bbox_mAP_m: 0.8450  coco/bbox_mAP_l: 0.8980  data_time: 0.0025  time: 0.0527
+2024/04/07 10:54:32 - mmengine - INFO - Epoch(train) [18][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:23:02  time: 0.4992  data_time: 0.0162  memory: 8922  loss: 0.3366  loss_rpn_cls: 0.0055  loss_rpn_bbox: 0.0074  s0.loss_cls: 0.0445  s0.acc: 97.8271  s0.loss_bbox: 0.1486  s1.loss_cls: 0.0106  s1.acc: 98.6765  s1.loss_bbox: 0.0778  s2.loss_cls: 0.0040  s2.acc: 99.7546  s2.loss_bbox: 0.0382
+2024/04/07 10:54:57 - mmengine - INFO - Epoch(train) [18][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:22:37  time: 0.4922  data_time: 0.0137  memory: 8842  loss: 0.3647  loss_rpn_cls: 0.0051  loss_rpn_bbox: 0.0070  s0.loss_cls: 0.0473  s0.acc: 98.2178  s0.loss_bbox: 0.1605  s1.loss_cls: 0.0128  s1.acc: 99.5081  s1.loss_bbox: 0.0854  s2.loss_cls: 0.0046  s2.acc: 99.6038  s2.loss_bbox: 0.0419
+2024/04/07 10:55:21 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:55:21 - mmengine - INFO - Epoch(train) [18][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:22:12  time: 0.4940  data_time: 0.0142  memory: 9225  loss: 0.3653  loss_rpn_cls: 0.0056  loss_rpn_bbox: 0.0069  s0.loss_cls: 0.0526  s0.acc: 98.6572  s0.loss_bbox: 0.1563  s1.loss_cls: 0.0137  s1.acc: 99.6570  s1.loss_bbox: 0.0839  s2.loss_cls: 0.0056  s2.acc: 99.5800  s2.loss_bbox: 0.0408
+2024/04/07 10:55:21 - mmengine - INFO - Saving checkpoint at 18 epochs
+2024/04/07 10:55:28 - mmengine - INFO - Epoch(val) [18][ 50/147]    eta: 0:00:05  time: 0.0528  data_time: 0.0028  memory: 1211  
+2024/04/07 10:55:30 - mmengine - INFO - Epoch(val) [18][100/147]    eta: 0:00:02  time: 0.0531  data_time: 0.0025  memory: 1211  
+2024/04/07 10:55:33 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:55:33 - mmengine - INFO - bbox_mAP_copypaste: 0.808 0.986 0.941 0.770 0.845 0.938
+2024/04/07 10:55:33 - mmengine - INFO - Epoch(val) [18][147/147]    coco/bbox_mAP: 0.8080  coco/bbox_mAP_50: 0.9860  coco/bbox_mAP_75: 0.9410  coco/bbox_mAP_s: 0.7700  coco/bbox_mAP_m: 0.8450  coco/bbox_mAP_l: 0.9380  data_time: 0.0026  time: 0.0532
+2024/04/07 10:55:58 - mmengine - INFO - Epoch(train) [19][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:21:48  time: 0.4976  data_time: 0.0166  memory: 8869  loss: 0.3311  loss_rpn_cls: 0.0046  loss_rpn_bbox: 0.0060  s0.loss_cls: 0.0428  s0.acc: 98.1201  s0.loss_bbox: 0.1470  s1.loss_cls: 0.0110  s1.acc: 99.5307  s1.loss_bbox: 0.0775  s2.loss_cls: 0.0040  s2.acc: 99.7021  s2.loss_bbox: 0.0381
+2024/04/07 10:56:23 - mmengine - INFO - Epoch(train) [19][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:21:23  time: 0.4974  data_time: 0.0149  memory: 8805  loss: 0.3338  loss_rpn_cls: 0.0052  loss_rpn_bbox: 0.0066  s0.loss_cls: 0.0418  s0.acc: 98.5352  s0.loss_bbox: 0.1501  s1.loss_cls: 0.0098  s1.acc: 99.6338  s1.loss_bbox: 0.0783  s2.loss_cls: 0.0037  s2.acc: 99.9268  s2.loss_bbox: 0.0382
+2024/04/07 10:56:48 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:56:48 - mmengine - INFO - Epoch(train) [19][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:20:59  time: 0.4946  data_time: 0.0137  memory: 8935  loss: 0.3368  loss_rpn_cls: 0.0052  loss_rpn_bbox: 0.0072  s0.loss_cls: 0.0408  s0.acc: 98.1201  s0.loss_bbox: 0.1473  s1.loss_cls: 0.0108  s1.acc: 98.7648  s1.loss_bbox: 0.0811  s2.loss_cls: 0.0042  s2.acc: 99.3529  s2.loss_bbox: 0.0402
+2024/04/07 10:56:48 - mmengine - INFO - Saving checkpoint at 19 epochs
+2024/04/07 10:56:54 - mmengine - INFO - Epoch(val) [19][ 50/147]    eta: 0:00:05  time: 0.0523  data_time: 0.0025  memory: 1211  
+2024/04/07 10:56:57 - mmengine - INFO - Epoch(val) [19][100/147]    eta: 0:00:02  time: 0.0523  data_time: 0.0024  memory: 1211  
+2024/04/07 10:56:59 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:57:00 - mmengine - INFO - bbox_mAP_copypaste: 0.814 0.996 0.950 0.771 0.849 0.909
+2024/04/07 10:57:00 - mmengine - INFO - Epoch(val) [19][147/147]    coco/bbox_mAP: 0.8140  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9500  coco/bbox_mAP_s: 0.7710  coco/bbox_mAP_m: 0.8490  coco/bbox_mAP_l: 0.9090  data_time: 0.0024  time: 0.0524
+2024/04/07 10:57:24 - mmengine - INFO - Epoch(train) [20][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:20:34  time: 0.4958  data_time: 0.0169  memory: 9001  loss: 0.3301  loss_rpn_cls: 0.0045  loss_rpn_bbox: 0.0067  s0.loss_cls: 0.0423  s0.acc: 98.4863  s0.loss_bbox: 0.1440  s1.loss_cls: 0.0108  s1.acc: 99.3896  s1.loss_bbox: 0.0788  s2.loss_cls: 0.0043  s2.acc: 99.3144  s2.loss_bbox: 0.0386
+2024/04/07 10:57:49 - mmengine - INFO - Epoch(train) [20][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:20:09  time: 0.4961  data_time: 0.0145  memory: 8782  loss: 0.3245  loss_rpn_cls: 0.0045  loss_rpn_bbox: 0.0070  s0.loss_cls: 0.0425  s0.acc: 98.5107  s0.loss_bbox: 0.1412  s1.loss_cls: 0.0111  s1.acc: 99.3652  s1.loss_bbox: 0.0763  s2.loss_cls: 0.0045  s2.acc: 99.4839  s2.loss_bbox: 0.0374
+2024/04/07 10:58:14 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:58:14 - mmengine - INFO - Epoch(train) [20][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:19:45  time: 0.4962  data_time: 0.0137  memory: 9003  loss: 0.3246  loss_rpn_cls: 0.0047  loss_rpn_bbox: 0.0069  s0.loss_cls: 0.0424  s0.acc: 98.2910  s0.loss_bbox: 0.1398  s1.loss_cls: 0.0112  s1.acc: 99.1148  s1.loss_bbox: 0.0768  s2.loss_cls: 0.0043  s2.acc: 99.2065  s2.loss_bbox: 0.0385
+2024/04/07 10:58:14 - mmengine - INFO - Saving checkpoint at 20 epochs
+2024/04/07 10:58:21 - mmengine - INFO - Epoch(val) [20][ 50/147]    eta: 0:00:05  time: 0.0532  data_time: 0.0026  memory: 1211  
+2024/04/07 10:58:23 - mmengine - INFO - Epoch(val) [20][100/147]    eta: 0:00:02  time: 0.0523  data_time: 0.0024  memory: 1211  
+2024/04/07 10:58:26 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:58:26 - mmengine - INFO - bbox_mAP_copypaste: 0.817 0.990 0.949 0.779 0.851 0.937
+2024/04/07 10:58:26 - mmengine - INFO - Epoch(val) [20][147/147]    coco/bbox_mAP: 0.8170  coco/bbox_mAP_50: 0.9900  coco/bbox_mAP_75: 0.9490  coco/bbox_mAP_s: 0.7790  coco/bbox_mAP_m: 0.8510  coco/bbox_mAP_l: 0.9370  data_time: 0.0024  time: 0.0526
+2024/04/07 10:58:51 - mmengine - INFO - Epoch(train) [21][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:19:20  time: 0.5017  data_time: 0.0167  memory: 9091  loss: 0.3187  loss_rpn_cls: 0.0051  loss_rpn_bbox: 0.0072  s0.loss_cls: 0.0392  s0.acc: 98.5596  s0.loss_bbox: 0.1417  s1.loss_cls: 0.0101  s1.acc: 99.2920  s1.loss_bbox: 0.0747  s2.loss_cls: 0.0039  s2.acc: 99.5605  s2.loss_bbox: 0.0368
+2024/04/07 10:59:16 - mmengine - INFO - Epoch(train) [21][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:18:56  time: 0.4935  data_time: 0.0138  memory: 8994  loss: 0.3422  loss_rpn_cls: 0.0050  loss_rpn_bbox: 0.0070  s0.loss_cls: 0.0460  s0.acc: 98.4131  s0.loss_bbox: 0.1478  s1.loss_cls: 0.0116  s1.acc: 99.4862  s1.loss_bbox: 0.0806  s2.loss_cls: 0.0043  s2.acc: 99.3112  s2.loss_bbox: 0.0399
+2024/04/07 10:59:41 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 10:59:41 - mmengine - INFO - Epoch(train) [21][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:18:31  time: 0.4962  data_time: 0.0139  memory: 9248  loss: 0.3264  loss_rpn_cls: 0.0050  loss_rpn_bbox: 0.0066  s0.loss_cls: 0.0428  s0.acc: 98.0713  s0.loss_bbox: 0.1429  s1.loss_cls: 0.0106  s1.acc: 99.1898  s1.loss_bbox: 0.0769  s2.loss_cls: 0.0040  s2.acc: 99.4824  s2.loss_bbox: 0.0376
+2024/04/07 10:59:41 - mmengine - INFO - Saving checkpoint at 21 epochs
+2024/04/07 10:59:47 - mmengine - INFO - Epoch(val) [21][ 50/147]    eta: 0:00:05  time: 0.0531  data_time: 0.0026  memory: 1211  
+2024/04/07 10:59:50 - mmengine - INFO - Epoch(val) [21][100/147]    eta: 0:00:02  time: 0.0526  data_time: 0.0023  memory: 1211  
+2024/04/07 10:59:53 - mmengine - INFO - Evaluating bbox...
+2024/04/07 10:59:53 - mmengine - INFO - bbox_mAP_copypaste: 0.820 0.994 0.957 0.773 0.858 0.928
+2024/04/07 10:59:53 - mmengine - INFO - Epoch(val) [21][147/147]    coco/bbox_mAP: 0.8200  coco/bbox_mAP_50: 0.9940  coco/bbox_mAP_75: 0.9570  coco/bbox_mAP_s: 0.7730  coco/bbox_mAP_m: 0.8580  coco/bbox_mAP_l: 0.9280  data_time: 0.0024  time: 0.0530
+2024/04/07 11:00:18 - mmengine - INFO - Epoch(train) [22][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:18:07  time: 0.5007  data_time: 0.0160  memory: 8981  loss: 0.3341  loss_rpn_cls: 0.0051  loss_rpn_bbox: 0.0067  s0.loss_cls: 0.0414  s0.acc: 97.7295  s0.loss_bbox: 0.1487  s1.loss_cls: 0.0105  s1.acc: 98.8449  s1.loss_bbox: 0.0791  s2.loss_cls: 0.0040  s2.acc: 99.1567  s2.loss_bbox: 0.0386
+2024/04/07 11:00:43 - mmengine - INFO - Epoch(train) [22][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:17:42  time: 0.4963  data_time: 0.0138  memory: 8747  loss: 0.3184  loss_rpn_cls: 0.0056  loss_rpn_bbox: 0.0066  s0.loss_cls: 0.0400  s0.acc: 97.2900  s0.loss_bbox: 0.1422  s1.loss_cls: 0.0101  s1.acc: 98.4574  s1.loss_bbox: 0.0738  s2.loss_cls: 0.0036  s2.acc: 99.4071  s2.loss_bbox: 0.0365
+2024/04/07 11:01:07 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:01:07 - mmengine - INFO - Epoch(train) [22][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:17:17  time: 0.4875  data_time: 0.0135  memory: 8817  loss: 0.3181  loss_rpn_cls: 0.0047  loss_rpn_bbox: 0.0064  s0.loss_cls: 0.0396  s0.acc: 98.8281  s0.loss_bbox: 0.1405  s1.loss_cls: 0.0102  s1.acc: 99.4141  s1.loss_bbox: 0.0753  s2.loss_cls: 0.0041  s2.acc: 99.5361  s2.loss_bbox: 0.0375
+2024/04/07 11:01:07 - mmengine - INFO - Saving checkpoint at 22 epochs
+2024/04/07 11:01:14 - mmengine - INFO - Epoch(val) [22][ 50/147]    eta: 0:00:05  time: 0.0538  data_time: 0.0026  memory: 1211  
+2024/04/07 11:01:16 - mmengine - INFO - Epoch(val) [22][100/147]    eta: 0:00:02  time: 0.0527  data_time: 0.0023  memory: 1211  
+2024/04/07 11:01:19 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:01:19 - mmengine - INFO - bbox_mAP_copypaste: 0.816 0.989 0.947 0.767 0.853 0.951
+2024/04/07 11:01:19 - mmengine - INFO - Epoch(val) [22][147/147]    coco/bbox_mAP: 0.8160  coco/bbox_mAP_50: 0.9890  coco/bbox_mAP_75: 0.9470  coco/bbox_mAP_s: 0.7670  coco/bbox_mAP_m: 0.8530  coco/bbox_mAP_l: 0.9510  data_time: 0.0024  time: 0.0529
+2024/04/07 11:01:44 - mmengine - INFO - Epoch(train) [23][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:16:53  time: 0.5006  data_time: 0.0168  memory: 9028  loss: 0.3011  loss_rpn_cls: 0.0047  loss_rpn_bbox: 0.0063  s0.loss_cls: 0.0364  s0.acc: 98.7061  s0.loss_bbox: 0.1351  s1.loss_cls: 0.0082  s1.acc: 99.5833  s1.loss_bbox: 0.0716  s2.loss_cls: 0.0032  s2.acc: 99.4828  s2.loss_bbox: 0.0356
+2024/04/07 11:02:09 - mmengine - INFO - Epoch(train) [23][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:16:28  time: 0.4960  data_time: 0.0136  memory: 8896  loss: 0.3015  loss_rpn_cls: 0.0054  loss_rpn_bbox: 0.0067  s0.loss_cls: 0.0379  s0.acc: 98.5352  s0.loss_bbox: 0.1335  s1.loss_cls: 0.0086  s1.acc: 99.6576  s1.loss_bbox: 0.0711  s2.loss_cls: 0.0033  s2.acc: 99.7778  s2.loss_bbox: 0.0350
+2024/04/07 11:02:34 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:02:34 - mmengine - INFO - Epoch(train) [23][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:16:03  time: 0.4951  data_time: 0.0136  memory: 8912  loss: 0.3080  loss_rpn_cls: 0.0044  loss_rpn_bbox: 0.0069  s0.loss_cls: 0.0396  s0.acc: 97.2900  s0.loss_bbox: 0.1369  s1.loss_cls: 0.0090  s1.acc: 98.8949  s1.loss_bbox: 0.0721  s2.loss_cls: 0.0035  s2.acc: 98.7435  s2.loss_bbox: 0.0356
+2024/04/07 11:02:34 - mmengine - INFO - Saving checkpoint at 23 epochs
+2024/04/07 11:02:41 - mmengine - INFO - Epoch(val) [23][ 50/147]    eta: 0:00:05  time: 0.0527  data_time: 0.0026  memory: 1211  
+2024/04/07 11:02:43 - mmengine - INFO - Epoch(val) [23][100/147]    eta: 0:00:02  time: 0.0514  data_time: 0.0023  memory: 1211  
+2024/04/07 11:02:46 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:02:46 - mmengine - INFO - bbox_mAP_copypaste: 0.827 0.995 0.965 0.791 0.855 0.902
+2024/04/07 11:02:46 - mmengine - INFO - Epoch(val) [23][147/147]    coco/bbox_mAP: 0.8270  coco/bbox_mAP_50: 0.9950  coco/bbox_mAP_75: 0.9650  coco/bbox_mAP_s: 0.7910  coco/bbox_mAP_m: 0.8550  coco/bbox_mAP_l: 0.9020  data_time: 0.0024  time: 0.0528
+2024/04/07 11:03:11 - mmengine - INFO - Epoch(train) [24][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:15:39  time: 0.4977  data_time: 0.0156  memory: 9349  loss: 0.3075  loss_rpn_cls: 0.0048  loss_rpn_bbox: 0.0069  s0.loss_cls: 0.0367  s0.acc: 98.0713  s0.loss_bbox: 0.1389  s1.loss_cls: 0.0092  s1.acc: 98.6816  s1.loss_bbox: 0.0718  s2.loss_cls: 0.0037  s2.acc: 98.5305  s2.loss_bbox: 0.0356
+2024/04/07 11:03:35 - mmengine - INFO - Epoch(train) [24][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:15:14  time: 0.4861  data_time: 0.0136  memory: 9022  loss: 0.3135  loss_rpn_cls: 0.0042  loss_rpn_bbox: 0.0059  s0.loss_cls: 0.0384  s0.acc: 98.5596  s0.loss_bbox: 0.1420  s1.loss_cls: 0.0090  s1.acc: 99.5117  s1.loss_bbox: 0.0744  s2.loss_cls: 0.0034  s2.acc: 99.2638  s2.loss_bbox: 0.0362
+2024/04/07 11:04:00 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:04:00 - mmengine - INFO - Epoch(train) [24][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:14:49  time: 0.4929  data_time: 0.0139  memory: 9388  loss: 0.3100  loss_rpn_cls: 0.0048  loss_rpn_bbox: 0.0061  s0.loss_cls: 0.0400  s0.acc: 98.7549  s0.loss_bbox: 0.1370  s1.loss_cls: 0.0101  s1.acc: 99.6094  s1.loss_bbox: 0.0726  s2.loss_cls: 0.0037  s2.acc: 99.6094  s2.loss_bbox: 0.0355
+2024/04/07 11:04:00 - mmengine - INFO - Saving checkpoint at 24 epochs
+2024/04/07 11:04:06 - mmengine - INFO - Epoch(val) [24][ 50/147]    eta: 0:00:05  time: 0.0524  data_time: 0.0026  memory: 1211  
+2024/04/07 11:04:09 - mmengine - INFO - Epoch(val) [24][100/147]    eta: 0:00:02  time: 0.0526  data_time: 0.0023  memory: 1211  
+2024/04/07 11:04:12 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:04:12 - mmengine - INFO - bbox_mAP_copypaste: 0.823 0.996 0.956 0.780 0.853 0.901
+2024/04/07 11:04:12 - mmengine - INFO - Epoch(val) [24][147/147]    coco/bbox_mAP: 0.8230  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9560  coco/bbox_mAP_s: 0.7800  coco/bbox_mAP_m: 0.8530  coco/bbox_mAP_l: 0.9010  data_time: 0.0025  time: 0.0526
+2024/04/07 11:04:37 - mmengine - INFO - Epoch(train) [25][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:14:24  time: 0.5065  data_time: 0.0160  memory: 9073  loss: 0.2884  loss_rpn_cls: 0.0047  loss_rpn_bbox: 0.0059  s0.loss_cls: 0.0359  s0.acc: 98.1445  s0.loss_bbox: 0.1301  s1.loss_cls: 0.0084  s1.acc: 99.0938  s1.loss_bbox: 0.0670  s2.loss_cls: 0.0033  s2.acc: 99.4093  s2.loss_bbox: 0.0331
+2024/04/07 11:05:02 - mmengine - INFO - Epoch(train) [25][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:14:00  time: 0.4967  data_time: 0.0141  memory: 8765  loss: 0.2919  loss_rpn_cls: 0.0042  loss_rpn_bbox: 0.0063  s0.loss_cls: 0.0365  s0.acc: 98.0713  s0.loss_bbox: 0.1334  s1.loss_cls: 0.0076  s1.acc: 99.5310  s1.loss_bbox: 0.0678  s2.loss_cls: 0.0029  s2.acc: 99.7251  s2.loss_bbox: 0.0333
+2024/04/07 11:05:27 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:05:27 - mmengine - INFO - Epoch(train) [25][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:13:35  time: 0.4947  data_time: 0.0141  memory: 8999  loss: 0.3021  loss_rpn_cls: 0.0041  loss_rpn_bbox: 0.0060  s0.loss_cls: 0.0353  s0.acc: 98.6572  s0.loss_bbox: 0.1400  s1.loss_cls: 0.0081  s1.acc: 99.4837  s1.loss_bbox: 0.0711  s2.loss_cls: 0.0029  s2.acc: 99.7277  s2.loss_bbox: 0.0346
+2024/04/07 11:05:27 - mmengine - INFO - Saving checkpoint at 25 epochs
+2024/04/07 11:05:34 - mmengine - INFO - Epoch(val) [25][ 50/147]    eta: 0:00:05  time: 0.0546  data_time: 0.0028  memory: 1211  
+2024/04/07 11:05:36 - mmengine - INFO - Epoch(val) [25][100/147]    eta: 0:00:02  time: 0.0530  data_time: 0.0025  memory: 1211  
+2024/04/07 11:05:39 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:05:39 - mmengine - INFO - bbox_mAP_copypaste: 0.818 0.993 0.939 0.774 0.854 0.953
+2024/04/07 11:05:39 - mmengine - INFO - Epoch(val) [25][147/147]    coco/bbox_mAP: 0.8180  coco/bbox_mAP_50: 0.9930  coco/bbox_mAP_75: 0.9390  coco/bbox_mAP_s: 0.7740  coco/bbox_mAP_m: 0.8540  coco/bbox_mAP_l: 0.9530  data_time: 0.0025  time: 0.0536
+2024/04/07 11:06:04 - mmengine - INFO - Epoch(train) [26][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:13:11  time: 0.5024  data_time: 0.0164  memory: 8971  loss: 0.3021  loss_rpn_cls: 0.0052  loss_rpn_bbox: 0.0065  s0.loss_cls: 0.0375  s0.acc: 97.8516  s0.loss_bbox: 0.1357  s1.loss_cls: 0.0081  s1.acc: 99.3103  s1.loss_bbox: 0.0714  s2.loss_cls: 0.0030  s2.acc: 99.6020  s2.loss_bbox: 0.0347
+2024/04/07 11:06:29 - mmengine - INFO - Epoch(train) [26][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:12:46  time: 0.4956  data_time: 0.0141  memory: 9704  loss: 0.2915  loss_rpn_cls: 0.0043  loss_rpn_bbox: 0.0065  s0.loss_cls: 0.0369  s0.acc: 98.9014  s0.loss_bbox: 0.1336  s1.loss_cls: 0.0076  s1.acc: 99.5605  s1.loss_bbox: 0.0673  s2.loss_cls: 0.0027  s2.acc: 99.7800  s2.loss_bbox: 0.0325
+2024/04/07 11:06:54 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:06:54 - mmengine - INFO - Epoch(train) [26][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:12:21  time: 0.4978  data_time: 0.0140  memory: 9027  loss: 0.3027  loss_rpn_cls: 0.0040  loss_rpn_bbox: 0.0058  s0.loss_cls: 0.0368  s0.acc: 98.3154  s0.loss_bbox: 0.1387  s1.loss_cls: 0.0082  s1.acc: 99.4061  s1.loss_bbox: 0.0714  s2.loss_cls: 0.0031  s2.acc: 99.7747  s2.loss_bbox: 0.0346
+2024/04/07 11:06:54 - mmengine - INFO - Saving checkpoint at 26 epochs
+2024/04/07 11:07:00 - mmengine - INFO - Epoch(val) [26][ 50/147]    eta: 0:00:05  time: 0.0542  data_time: 0.0027  memory: 1211  
+2024/04/07 11:07:03 - mmengine - INFO - Epoch(val) [26][100/147]    eta: 0:00:02  time: 0.0520  data_time: 0.0024  memory: 1211  
+2024/04/07 11:07:05 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:07:06 - mmengine - INFO - bbox_mAP_copypaste: 0.824 0.996 0.961 0.774 0.854 0.947
+2024/04/07 11:07:06 - mmengine - INFO - Epoch(val) [26][147/147]    coco/bbox_mAP: 0.8240  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9610  coco/bbox_mAP_s: 0.7740  coco/bbox_mAP_m: 0.8540  coco/bbox_mAP_l: 0.9470  data_time: 0.0025  time: 0.0529
+2024/04/07 11:07:31 - mmengine - INFO - Epoch(train) [27][ 50/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:11:57  time: 0.4995  data_time: 0.0165  memory: 8942  loss: 0.2911  loss_rpn_cls: 0.0040  loss_rpn_bbox: 0.0067  s0.loss_cls: 0.0376  s0.acc: 98.3398  s0.loss_bbox: 0.1304  s1.loss_cls: 0.0083  s1.acc: 99.3637  s1.loss_bbox: 0.0678  s2.loss_cls: 0.0032  s2.acc: 99.1613  s2.loss_bbox: 0.0331
+2024/04/07 11:07:55 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:07:55 - mmengine - INFO - Epoch(train) [27][100/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:11:32  time: 0.4874  data_time: 0.0143  memory: 8642  loss: 0.2799  loss_rpn_cls: 0.0041  loss_rpn_bbox: 0.0057  s0.loss_cls: 0.0349  s0.acc: 98.7793  s0.loss_bbox: 0.1271  s1.loss_cls: 0.0077  s1.acc: 99.7550  s1.loss_bbox: 0.0655  s2.loss_cls: 0.0031  s2.acc: 99.8524  s2.loss_bbox: 0.0319
+2024/04/07 11:08:20 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:08:20 - mmengine - INFO - Epoch(train) [27][150/150]  base_lr: 1.0000e-04 lr: 1.0000e-04  eta: 0:11:07  time: 0.4918  data_time: 0.0142  memory: 9158  loss: 0.2933  loss_rpn_cls: 0.0050  loss_rpn_bbox: 0.0066  s0.loss_cls: 0.0365  s0.acc: 98.5352  s0.loss_bbox: 0.1326  s1.loss_cls: 0.0084  s1.acc: 99.2159  s1.loss_bbox: 0.0678  s2.loss_cls: 0.0033  s2.acc: 99.6067  s2.loss_bbox: 0.0330
+2024/04/07 11:08:20 - mmengine - INFO - Saving checkpoint at 27 epochs
+2024/04/07 11:08:26 - mmengine - INFO - Epoch(val) [27][ 50/147]    eta: 0:00:05  time: 0.0535  data_time: 0.0026  memory: 1211  
+2024/04/07 11:08:29 - mmengine - INFO - Epoch(val) [27][100/147]    eta: 0:00:02  time: 0.0527  data_time: 0.0024  memory: 1211  
+2024/04/07 11:08:32 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:08:32 - mmengine - INFO - bbox_mAP_copypaste: 0.821 0.993 0.962 0.778 0.848 0.928
+2024/04/07 11:08:32 - mmengine - INFO - Epoch(val) [27][147/147]    coco/bbox_mAP: 0.8210  coco/bbox_mAP_50: 0.9930  coco/bbox_mAP_75: 0.9620  coco/bbox_mAP_s: 0.7780  coco/bbox_mAP_m: 0.8480  coco/bbox_mAP_l: 0.9280  data_time: 0.0024  time: 0.0531
+2024/04/07 11:08:58 - mmengine - INFO - Epoch(train) [28][ 50/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:10:43  time: 0.5111  data_time: 0.0171  memory: 9445  loss: 0.2594  loss_rpn_cls: 0.0046  loss_rpn_bbox: 0.0054  s0.loss_cls: 0.0322  s0.acc: 98.4619  s0.loss_bbox: 0.1166  s1.loss_cls: 0.0066  s1.acc: 99.8291  s1.loss_bbox: 0.0614  s2.loss_cls: 0.0023  s2.acc: 99.5361  s2.loss_bbox: 0.0303
+2024/04/07 11:09:22 - mmengine - INFO - Epoch(train) [28][100/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:10:18  time: 0.4942  data_time: 0.0140  memory: 8841  loss: 0.2559  loss_rpn_cls: 0.0042  loss_rpn_bbox: 0.0051  s0.loss_cls: 0.0313  s0.acc: 98.4375  s0.loss_bbox: 0.1165  s1.loss_cls: 0.0066  s1.acc: 98.7709  s1.loss_bbox: 0.0604  s2.loss_cls: 0.0023  s2.acc: 99.0848  s2.loss_bbox: 0.0294
+2024/04/07 11:09:47 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:09:47 - mmengine - INFO - Epoch(train) [28][150/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:09:53  time: 0.4879  data_time: 0.0135  memory: 8772  loss: 0.2552  loss_rpn_cls: 0.0047  loss_rpn_bbox: 0.0052  s0.loss_cls: 0.0329  s0.acc: 98.8281  s0.loss_bbox: 0.1143  s1.loss_cls: 0.0075  s1.acc: 99.8291  s1.loss_bbox: 0.0589  s2.loss_cls: 0.0030  s2.acc: 99.9023  s2.loss_bbox: 0.0287
+2024/04/07 11:09:47 - mmengine - INFO - Saving checkpoint at 28 epochs
+2024/04/07 11:09:53 - mmengine - INFO - Epoch(val) [28][ 50/147]    eta: 0:00:05  time: 0.0529  data_time: 0.0028  memory: 1211  
+2024/04/07 11:09:56 - mmengine - INFO - Epoch(val) [28][100/147]    eta: 0:00:02  time: 0.0517  data_time: 0.0023  memory: 1211  
+2024/04/07 11:09:58 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:09:59 - mmengine - INFO - bbox_mAP_copypaste: 0.834 0.996 0.961 0.793 0.871 0.940
+2024/04/07 11:09:59 - mmengine - INFO - Epoch(val) [28][147/147]    coco/bbox_mAP: 0.8340  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9610  coco/bbox_mAP_s: 0.7930  coco/bbox_mAP_m: 0.8710  coco/bbox_mAP_l: 0.9400  data_time: 0.0025  time: 0.0527
+2024/04/07 11:10:24 - mmengine - INFO - Epoch(train) [29][ 50/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:09:28  time: 0.5025  data_time: 0.0163  memory: 9498  loss: 0.2480  loss_rpn_cls: 0.0045  loss_rpn_bbox: 0.0053  s0.loss_cls: 0.0318  s0.acc: 98.9990  s0.loss_bbox: 0.1126  s1.loss_cls: 0.0066  s1.acc: 99.7558  s1.loss_bbox: 0.0571  s2.loss_cls: 0.0023  s2.acc: 99.8287  s2.loss_bbox: 0.0279
+2024/04/07 11:10:49 - mmengine - INFO - Epoch(train) [29][100/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:09:04  time: 0.4925  data_time: 0.0140  memory: 8747  loss: 0.2428  loss_rpn_cls: 0.0038  loss_rpn_bbox: 0.0050  s0.loss_cls: 0.0312  s0.acc: 99.0479  s0.loss_bbox: 0.1111  s1.loss_cls: 0.0065  s1.acc: 99.6338  s1.loss_bbox: 0.0558  s2.loss_cls: 0.0023  s2.acc: 99.9023  s2.loss_bbox: 0.0271
+2024/04/07 11:11:13 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:11:13 - mmengine - INFO - Epoch(train) [29][150/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:08:39  time: 0.4966  data_time: 0.0140  memory: 8992  loss: 0.2363  loss_rpn_cls: 0.0037  loss_rpn_bbox: 0.0048  s0.loss_cls: 0.0292  s0.acc: 98.9502  s0.loss_bbox: 0.1093  s1.loss_cls: 0.0056  s1.acc: 99.7803  s1.loss_bbox: 0.0550  s2.loss_cls: 0.0019  s2.acc: 99.9020  s2.loss_bbox: 0.0268
+2024/04/07 11:11:13 - mmengine - INFO - Saving checkpoint at 29 epochs
+2024/04/07 11:11:20 - mmengine - INFO - Epoch(val) [29][ 50/147]    eta: 0:00:05  time: 0.0528  data_time: 0.0027  memory: 1211  
+2024/04/07 11:11:23 - mmengine - INFO - Epoch(val) [29][100/147]    eta: 0:00:02  time: 0.0518  data_time: 0.0023  memory: 1211  
+2024/04/07 11:11:25 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:11:25 - mmengine - INFO - bbox_mAP_copypaste: 0.834 0.996 0.957 0.801 0.867 0.945
+2024/04/07 11:11:25 - mmengine - INFO - Epoch(val) [29][147/147]    coco/bbox_mAP: 0.8340  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9570  coco/bbox_mAP_s: 0.8010  coco/bbox_mAP_m: 0.8670  coco/bbox_mAP_l: 0.9450  data_time: 0.0025  time: 0.0529
+2024/04/07 11:11:51 - mmengine - INFO - Epoch(train) [30][ 50/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:08:14  time: 0.5065  data_time: 0.0161  memory: 9091  loss: 0.2415  loss_rpn_cls: 0.0040  loss_rpn_bbox: 0.0050  s0.loss_cls: 0.0305  s0.acc: 98.7305  s0.loss_bbox: 0.1100  s1.loss_cls: 0.0065  s1.acc: 99.6080  s1.loss_bbox: 0.0560  s2.loss_cls: 0.0023  s2.acc: 99.7784  s2.loss_bbox: 0.0273
+2024/04/07 11:12:16 - mmengine - INFO - Epoch(train) [30][100/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:07:50  time: 0.4997  data_time: 0.0140  memory: 9208  loss: 0.2489  loss_rpn_cls: 0.0040  loss_rpn_bbox: 0.0050  s0.loss_cls: 0.0306  s0.acc: 98.9990  s0.loss_bbox: 0.1155  s1.loss_cls: 0.0061  s1.acc: 99.7539  s1.loss_bbox: 0.0577  s2.loss_cls: 0.0023  s2.acc: 99.7520  s2.loss_bbox: 0.0278
+2024/04/07 11:12:41 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:12:41 - mmengine - INFO - Epoch(train) [30][150/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:07:25  time: 0.4980  data_time: 0.0138  memory: 9861  loss: 0.2399  loss_rpn_cls: 0.0046  loss_rpn_bbox: 0.0050  s0.loss_cls: 0.0294  s0.acc: 98.3643  s0.loss_bbox: 0.1106  s1.loss_cls: 0.0060  s1.acc: 99.2008  s1.loss_bbox: 0.0553  s2.loss_cls: 0.0021  s2.acc: 99.5180  s2.loss_bbox: 0.0269
+2024/04/07 11:12:41 - mmengine - INFO - Saving checkpoint at 30 epochs
+2024/04/07 11:12:47 - mmengine - INFO - Epoch(val) [30][ 50/147]    eta: 0:00:05  time: 0.0530  data_time: 0.0026  memory: 1211  
+2024/04/07 11:12:50 - mmengine - INFO - Epoch(val) [30][100/147]    eta: 0:00:02  time: 0.0531  data_time: 0.0024  memory: 1211  
+2024/04/07 11:12:53 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:12:53 - mmengine - INFO - bbox_mAP_copypaste: 0.836 0.996 0.965 0.808 0.868 0.940
+2024/04/07 11:12:53 - mmengine - INFO - Epoch(val) [30][147/147]    coco/bbox_mAP: 0.8360  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9650  coco/bbox_mAP_s: 0.8080  coco/bbox_mAP_m: 0.8680  coco/bbox_mAP_l: 0.9400  data_time: 0.0025  time: 0.0530
+2024/04/07 11:13:19 - mmengine - INFO - Epoch(train) [31][ 50/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:07:00  time: 0.5041  data_time: 0.0158  memory: 8993  loss: 0.2364  loss_rpn_cls: 0.0038  loss_rpn_bbox: 0.0049  s0.loss_cls: 0.0287  s0.acc: 99.1943  s0.loss_bbox: 0.1095  s1.loss_cls: 0.0057  s1.acc: 99.7314  s1.loss_bbox: 0.0551  s2.loss_cls: 0.0021  s2.acc: 99.6574  s2.loss_bbox: 0.0267
+2024/04/07 11:13:44 - mmengine - INFO - Epoch(train) [31][100/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:06:36  time: 0.5006  data_time: 0.0140  memory: 9266  loss: 0.2435  loss_rpn_cls: 0.0039  loss_rpn_bbox: 0.0049  s0.loss_cls: 0.0312  s0.acc: 98.6084  s0.loss_bbox: 0.1121  s1.loss_cls: 0.0060  s1.acc: 99.6558  s1.loss_bbox: 0.0560  s2.loss_cls: 0.0022  s2.acc: 99.3563  s2.loss_bbox: 0.0272
+2024/04/07 11:14:09 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:14:09 - mmengine - INFO - Epoch(train) [31][150/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:06:11  time: 0.4971  data_time: 0.0139  memory: 9151  loss: 0.2419  loss_rpn_cls: 0.0033  loss_rpn_bbox: 0.0047  s0.loss_cls: 0.0300  s0.acc: 98.8037  s0.loss_bbox: 0.1113  s1.loss_cls: 0.0064  s1.acc: 99.3164  s1.loss_bbox: 0.0565  s2.loss_cls: 0.0022  s2.acc: 99.5116  s2.loss_bbox: 0.0275
+2024/04/07 11:14:09 - mmengine - INFO - Saving checkpoint at 31 epochs
+2024/04/07 11:14:15 - mmengine - INFO - Epoch(val) [31][ 50/147]    eta: 0:00:05  time: 0.0533  data_time: 0.0026  memory: 1211  
+2024/04/07 11:14:18 - mmengine - INFO - Epoch(val) [31][100/147]    eta: 0:00:02  time: 0.0520  data_time: 0.0023  memory: 1211  
+2024/04/07 11:14:20 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:14:21 - mmengine - INFO - bbox_mAP_copypaste: 0.836 0.996 0.965 0.805 0.866 0.955
+2024/04/07 11:14:21 - mmengine - INFO - Epoch(val) [31][147/147]    coco/bbox_mAP: 0.8360  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9650  coco/bbox_mAP_s: 0.8050  coco/bbox_mAP_m: 0.8660  coco/bbox_mAP_l: 0.9550  data_time: 0.0024  time: 0.0527
+2024/04/07 11:14:46 - mmengine - INFO - Epoch(train) [32][ 50/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:05:46  time: 0.4972  data_time: 0.0158  memory: 9022  loss: 0.2339  loss_rpn_cls: 0.0041  loss_rpn_bbox: 0.0049  s0.loss_cls: 0.0302  s0.acc: 98.7305  s0.loss_bbox: 0.1078  s1.loss_cls: 0.0054  s1.acc: 99.6574  s1.loss_bbox: 0.0536  s2.loss_cls: 0.0020  s2.acc: 99.8771  s2.loss_bbox: 0.0259
+2024/04/07 11:15:10 - mmengine - INFO - Epoch(train) [32][100/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:05:21  time: 0.4945  data_time: 0.0140  memory: 8863  loss: 0.2380  loss_rpn_cls: 0.0039  loss_rpn_bbox: 0.0045  s0.loss_cls: 0.0296  s0.acc: 98.6816  s0.loss_bbox: 0.1104  s1.loss_cls: 0.0060  s1.acc: 99.5257  s1.loss_bbox: 0.0549  s2.loss_cls: 0.0020  s2.acc: 99.5701  s2.loss_bbox: 0.0267
+2024/04/07 11:15:35 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:15:35 - mmengine - INFO - Epoch(train) [32][150/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:04:57  time: 0.4995  data_time: 0.0144  memory: 9082  loss: 0.2415  loss_rpn_cls: 0.0040  loss_rpn_bbox: 0.0051  s0.loss_cls: 0.0302  s0.acc: 98.9258  s0.loss_bbox: 0.1109  s1.loss_cls: 0.0060  s1.acc: 99.7058  s1.loss_bbox: 0.0560  s2.loss_cls: 0.0021  s2.acc: 99.7778  s2.loss_bbox: 0.0270
+2024/04/07 11:15:35 - mmengine - INFO - Saving checkpoint at 32 epochs
+2024/04/07 11:15:42 - mmengine - INFO - Epoch(val) [32][ 50/147]    eta: 0:00:05  time: 0.0531  data_time: 0.0026  memory: 1211  
+2024/04/07 11:15:45 - mmengine - INFO - Epoch(val) [32][100/147]    eta: 0:00:02  time: 0.0518  data_time: 0.0023  memory: 1211  
+2024/04/07 11:15:47 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:15:47 - mmengine - INFO - bbox_mAP_copypaste: 0.837 0.996 0.972 0.806 0.869 0.939
+2024/04/07 11:15:47 - mmengine - INFO - Epoch(val) [32][147/147]    coco/bbox_mAP: 0.8370  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9720  coco/bbox_mAP_s: 0.8060  coco/bbox_mAP_m: 0.8690  coco/bbox_mAP_l: 0.9390  data_time: 0.0024  time: 0.0526
+2024/04/07 11:16:13 - mmengine - INFO - Epoch(train) [33][ 50/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:04:32  time: 0.5020  data_time: 0.0162  memory: 8825  loss: 0.2309  loss_rpn_cls: 0.0039  loss_rpn_bbox: 0.0047  s0.loss_cls: 0.0283  s0.acc: 99.0967  s0.loss_bbox: 0.1064  s1.loss_cls: 0.0056  s1.acc: 99.7048  s1.loss_bbox: 0.0538  s2.loss_cls: 0.0021  s2.acc: 99.8262  s2.loss_bbox: 0.0262
+2024/04/07 11:16:37 - mmengine - INFO - Epoch(train) [33][100/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:04:07  time: 0.4941  data_time: 0.0145  memory: 9151  loss: 0.2387  loss_rpn_cls: 0.0041  loss_rpn_bbox: 0.0050  s0.loss_cls: 0.0312  s0.acc: 98.9746  s0.loss_bbox: 0.1096  s1.loss_cls: 0.0061  s1.acc: 99.5353  s1.loss_bbox: 0.0542  s2.loss_cls: 0.0023  s2.acc: 99.8037  s2.loss_bbox: 0.0261
+2024/04/07 11:17:02 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:17:02 - mmengine - INFO - Epoch(train) [33][150/150]  base_lr: 1.0000e-05 lr: 1.0000e-05  eta: 0:03:42  time: 0.4945  data_time: 0.0140  memory: 9211  loss: 0.2322  loss_rpn_cls: 0.0037  loss_rpn_bbox: 0.0047  s0.loss_cls: 0.0283  s0.acc: 98.7793  s0.loss_bbox: 0.1078  s1.loss_cls: 0.0050  s1.acc: 99.6316  s1.loss_bbox: 0.0542  s2.loss_cls: 0.0019  s2.acc: 98.9130  s2.loss_bbox: 0.0265
+2024/04/07 11:17:02 - mmengine - INFO - Saving checkpoint at 33 epochs
+2024/04/07 11:17:09 - mmengine - INFO - Epoch(val) [33][ 50/147]    eta: 0:00:05  time: 0.0524  data_time: 0.0026  memory: 1211  
+2024/04/07 11:17:11 - mmengine - INFO - Epoch(val) [33][100/147]    eta: 0:00:02  time: 0.0517  data_time: 0.0023  memory: 1211  
+2024/04/07 11:17:14 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:17:14 - mmengine - INFO - bbox_mAP_copypaste: 0.837 0.996 0.969 0.804 0.871 0.932
+2024/04/07 11:17:14 - mmengine - INFO - Epoch(val) [33][147/147]    coco/bbox_mAP: 0.8370  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9690  coco/bbox_mAP_s: 0.8040  coco/bbox_mAP_m: 0.8710  coco/bbox_mAP_l: 0.9320  data_time: 0.0024  time: 0.0526
+2024/04/07 11:17:40 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:17:40 - mmengine - INFO - Epoch(train) [34][ 50/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:03:18  time: 0.5075  data_time: 0.0163  memory: 9426  loss: 0.2289  loss_rpn_cls: 0.0036  loss_rpn_bbox: 0.0044  s0.loss_cls: 0.0279  s0.acc: 98.7549  s0.loss_bbox: 0.1064  s1.loss_cls: 0.0052  s1.acc: 99.6826  s1.loss_bbox: 0.0534  s2.loss_cls: 0.0018  s2.acc: 99.8525  s2.loss_bbox: 0.0261
+2024/04/07 11:18:04 - mmengine - INFO - Epoch(train) [34][100/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:02:53  time: 0.4965  data_time: 0.0143  memory: 8946  loss: 0.2298  loss_rpn_cls: 0.0035  loss_rpn_bbox: 0.0045  s0.loss_cls: 0.0280  s0.acc: 98.7793  s0.loss_bbox: 0.1072  s1.loss_cls: 0.0052  s1.acc: 99.5117  s1.loss_bbox: 0.0534  s2.loss_cls: 0.0020  s2.acc: 99.9019  s2.loss_bbox: 0.0258
+2024/04/07 11:18:29 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:18:29 - mmengine - INFO - Epoch(train) [34][150/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:02:28  time: 0.5005  data_time: 0.0147  memory: 9349  loss: 0.2316  loss_rpn_cls: 0.0043  loss_rpn_bbox: 0.0049  s0.loss_cls: 0.0289  s0.acc: 98.0957  s0.loss_bbox: 0.1070  s1.loss_cls: 0.0057  s1.acc: 98.9909  s1.loss_bbox: 0.0530  s2.loss_cls: 0.0021  s2.acc: 98.6329  s2.loss_bbox: 0.0256
+2024/04/07 11:18:29 - mmengine - INFO - Saving checkpoint at 34 epochs
+2024/04/07 11:18:36 - mmengine - INFO - Epoch(val) [34][ 50/147]    eta: 0:00:05  time: 0.0526  data_time: 0.0026  memory: 1211  
+2024/04/07 11:18:39 - mmengine - INFO - Epoch(val) [34][100/147]    eta: 0:00:02  time: 0.0526  data_time: 0.0025  memory: 1211  
+2024/04/07 11:18:41 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:18:41 - mmengine - INFO - bbox_mAP_copypaste: 0.837 0.996 0.965 0.803 0.870 0.939
+2024/04/07 11:18:41 - mmengine - INFO - Epoch(val) [34][147/147]    coco/bbox_mAP: 0.8370  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9650  coco/bbox_mAP_s: 0.8030  coco/bbox_mAP_m: 0.8700  coco/bbox_mAP_l: 0.9390  data_time: 0.0025  time: 0.0527
+2024/04/07 11:19:07 - mmengine - INFO - Epoch(train) [35][ 50/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:02:03  time: 0.5060  data_time: 0.0159  memory: 8790  loss: 0.2364  loss_rpn_cls: 0.0042  loss_rpn_bbox: 0.0050  s0.loss_cls: 0.0305  s0.acc: 98.4619  s0.loss_bbox: 0.1087  s1.loss_cls: 0.0064  s1.acc: 99.0453  s1.loss_bbox: 0.0535  s2.loss_cls: 0.0022  s2.acc: 99.5590  s2.loss_bbox: 0.0260
+2024/04/07 11:19:31 - mmengine - INFO - Epoch(train) [35][100/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:01:39  time: 0.4946  data_time: 0.0141  memory: 9022  loss: 0.2241  loss_rpn_cls: 0.0040  loss_rpn_bbox: 0.0046  s0.loss_cls: 0.0267  s0.acc: 98.7305  s0.loss_bbox: 0.1048  s1.loss_cls: 0.0051  s1.acc: 99.5116  s1.loss_bbox: 0.0520  s2.loss_cls: 0.0018  s2.acc: 99.7056  s2.loss_bbox: 0.0252
+2024/04/07 11:19:56 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:19:56 - mmengine - INFO - Epoch(train) [35][150/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:01:14  time: 0.4908  data_time: 0.0138  memory: 8675  loss: 0.2340  loss_rpn_cls: 0.0031  loss_rpn_bbox: 0.0048  s0.loss_cls: 0.0302  s0.acc: 98.6084  s0.loss_bbox: 0.1079  s1.loss_cls: 0.0064  s1.acc: 99.6087  s1.loss_bbox: 0.0535  s2.loss_cls: 0.0022  s2.acc: 99.7304  s2.loss_bbox: 0.0260
+2024/04/07 11:19:56 - mmengine - INFO - Saving checkpoint at 35 epochs
+2024/04/07 11:20:02 - mmengine - INFO - Epoch(val) [35][ 50/147]    eta: 0:00:05  time: 0.0530  data_time: 0.0027  memory: 1211  
+2024/04/07 11:20:05 - mmengine - INFO - Epoch(val) [35][100/147]    eta: 0:00:02  time: 0.0527  data_time: 0.0023  memory: 1211  
+2024/04/07 11:20:08 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:20:08 - mmengine - INFO - bbox_mAP_copypaste: 0.837 0.996 0.968 0.803 0.869 0.939
+2024/04/07 11:20:08 - mmengine - INFO - Epoch(val) [35][147/147]    coco/bbox_mAP: 0.8370  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9680  coco/bbox_mAP_s: 0.8030  coco/bbox_mAP_m: 0.8690  coco/bbox_mAP_l: 0.9390  data_time: 0.0025  time: 0.0529
+2024/04/07 11:20:33 - mmengine - INFO - Epoch(train) [36][ 50/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:00:49  time: 0.4999  data_time: 0.0164  memory: 9057  loss: 0.2326  loss_rpn_cls: 0.0048  loss_rpn_bbox: 0.0046  s0.loss_cls: 0.0289  s0.acc: 98.9258  s0.loss_bbox: 0.1076  s1.loss_cls: 0.0057  s1.acc: 99.4106  s1.loss_bbox: 0.0535  s2.loss_cls: 0.0020  s2.acc: 99.6798  s2.loss_bbox: 0.0256
+2024/04/07 11:20:58 - mmengine - INFO - Epoch(train) [36][100/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:00:24  time: 0.4928  data_time: 0.0136  memory: 9130  loss: 0.2340  loss_rpn_cls: 0.0039  loss_rpn_bbox: 0.0048  s0.loss_cls: 0.0301  s0.acc: 98.7549  s0.loss_bbox: 0.1082  s1.loss_cls: 0.0055  s1.acc: 99.4867  s1.loss_bbox: 0.0535  s2.loss_cls: 0.0019  s2.acc: 99.7543  s2.loss_bbox: 0.0261
+2024/04/07 11:21:22 - mmengine - INFO - Exp name: cascade_rcnn_swin_tiny_3x_coco_20240407_102853
+2024/04/07 11:21:22 - mmengine - INFO - Epoch(train) [36][150/150]  base_lr: 1.0000e-06 lr: 1.0000e-06  eta: 0:00:00  time: 0.4960  data_time: 0.0137  memory: 8862  loss: 0.2340  loss_rpn_cls: 0.0042  loss_rpn_bbox: 0.0049  s0.loss_cls: 0.0296  s0.acc: 99.0234  s0.loss_bbox: 0.1071  s1.loss_cls: 0.0061  s1.acc: 99.6574  s1.loss_bbox: 0.0537  s2.loss_cls: 0.0020  s2.acc: 99.8026  s2.loss_bbox: 0.0262
+2024/04/07 11:21:22 - mmengine - INFO - Saving checkpoint at 36 epochs
+2024/04/07 11:21:29 - mmengine - INFO - Epoch(val) [36][ 50/147]    eta: 0:00:05  time: 0.0550  data_time: 0.0027  memory: 1211  
+2024/04/07 11:21:32 - mmengine - INFO - Epoch(val) [36][100/147]    eta: 0:00:02  time: 0.0542  data_time: 0.0023  memory: 1211  
+2024/04/07 11:21:34 - mmengine - INFO - Evaluating bbox...
+2024/04/07 11:21:34 - mmengine - INFO - bbox_mAP_copypaste: 0.837 0.996 0.968 0.802 0.869 0.954
+2024/04/07 11:21:34 - mmengine - INFO - Epoch(val) [36][147/147]    coco/bbox_mAP: 0.8370  coco/bbox_mAP_50: 0.9960  coco/bbox_mAP_75: 0.9680  coco/bbox_mAP_s: 0.8020  coco/bbox_mAP_m: 0.8690  coco/bbox_mAP_l: 0.9540  data_time: 0.0025  time: 0.0543
